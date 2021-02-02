@@ -1,7 +1,7 @@
 # Личный проект «Шесть городов» [![Build status][travis-image]][travis-url]
 
 * Студент: [Владимир Якубович](https://up.htmlacademy.ru/react/6/user/34338).
-* Наставник: `Неизвестно`.
+* Наставник: [Алексей Белявский](https://htmlacademy.ru/profile/id666435).
 
 ---
 
