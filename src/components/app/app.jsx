@@ -5,13 +5,13 @@ import MainPage from '../main-page/main-page';
 const App = ({placesCount}) => {
   return (
     <MainPage
-      placesCount = {placesCount}
+      placesCount={placesCount}
     />
   );
 };
 
 App.propTypes = {
-  placesCount: PropTypes.number.isRequired
+  placesCount: PropTypes.number.isRequired,
 };
 
 export default App;

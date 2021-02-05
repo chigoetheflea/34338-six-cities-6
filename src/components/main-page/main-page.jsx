@@ -2,13 +2,24 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import PlaceCard from '../place-card/place-card';
 
-const PlacesTitles = [
+const PLACES_TITLES = [
   `Beautiful & luxurious apartment at great location`,
   `Wood and stone place`,
   `Canal View Prinsengracht`,
   `Nice, cozy, warm big bed apartment`,
-  `Wood and stone place`
+  `Wood and stone place`,
 ];
+
+const CITIES = [
+  `Paris`,
+  `Cologne`,
+  `Brussels`,
+  `Amsterdam`,
+  `Hamburg`,
+  `Dusseldorf`,
+];
+
+const DEFAULT_CITY = CITIES[0];
 
 const MainPage = ({placesCount}) => {
   return (
@@ -41,36 +52,19 @@ const MainPage = ({placesCount}) => {
         <div className="tabs">
           <section className="locations container">
             <ul className="locations__list tabs__list">
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Paris</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Cologne</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Brussels</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item tabs__item--active">
-                  <span>Amsterdam</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Hamburg</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Dusseldorf</span>
-                </a>
-              </li>
+              {
+                CITIES.map((city) => {
+                  const tabActiveClass = city === DEFAULT_CITY ? ` tabs__item--active` : ``;
+
+                  return (
+                    <li className="locations__item" key={city}>
+                      <a className={`locations__item-link tabs__item${tabActiveClass}`} href="#">
+                        <span>{city}</span>
+                      </a>
+                    </li>
+                  );
+                })
+              }
             </ul>
           </section>
         </div>
@@ -95,11 +89,9 @@ const MainPage = ({placesCount}) => {
                 </ul>
               </form>
               <div className="cities__places-list places__list tabs__content">
-
                 {
-                  PlacesTitles.map((placeTitle, indx) => <PlaceCard key = {`pc` + indx} placeTitle = {placeTitle} />)
+                  PLACES_TITLES.map((placeTitle, index) => <PlaceCard key={`pc${index}`} placeTitle={placeTitle} />)
                 }
-
               </div>
             </section>
             <div className="cities__right-section">
@@ -113,7 +105,7 @@ const MainPage = ({placesCount}) => {
 };
 
 MainPage.propTypes = {
-  placesCount: PropTypes.number.isRequired
+  placesCount: PropTypes.number.isRequired,
 };
 
 export default MainPage;
