@@ -36,8 +36,7 @@ const MainPage = ({placesCount}) => {
               <ul className="header__nav-list">
                 <li className="header__nav-item user">
                   <a className="header__nav-link header__nav-link--profile" href="#">
-                    <div className="header__avatar-wrapper user__avatar-wrapper">
-                    </div>
+                    <div className="header__avatar-wrapper user__avatar-wrapper" />
                     <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
                   </a>
                 </li>
@@ -78,7 +77,7 @@ const MainPage = ({placesCount}) => {
                 <span className="places__sorting-type" tabIndex="0">
                   Popular
                   <svg className="places__sorting-arrow" width="7" height="4">
-                    <use xlinkHref="#icon-arrow-select"></use>
+                    <use xlinkHref="#icon-arrow-select" />
                   </svg>
                 </span>
                 <ul className="places__options places__options--custom places__options--opened">
@@ -95,7 +94,7 @@ const MainPage = ({placesCount}) => {
               </div>
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map"></section>
+              <section className="cities__map map" />
             </div>
           </div>
         </div>

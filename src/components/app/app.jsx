@@ -6,7 +6,7 @@ import MainPage from '../main-page/main-page';
 import Login from '../login/login';
 import Favorites from '../favorites/favorites';
 import Offer from '../offer/offer';
-import Page404 from '../page-404/page-404';
+import PageNotFound from '../page-not-found/page-not-found';
 
 const App = ({placesCount}) => {
   return (
@@ -25,7 +25,7 @@ const App = ({placesCount}) => {
           <Offer />
         </Route>
         <Route>
-          <Page404 />
+          <PageNotFound />
         </Route>
       </Switch>
     </Router>

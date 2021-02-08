@@ -2,7 +2,7 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import InnerPageHeader from "../inner-page-header/inner-page-header";
 
-const Page404 = () => {
+const PageNotFound = () => {
   return (
     <div className="page page--gray page--404">
       <InnerPageHeader />
@@ -21,4 +21,4 @@ const Page404 = () => {
   );
 };
 
-export default Page404;
+export default PageNotFound;
