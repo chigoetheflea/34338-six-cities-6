@@ -9,7 +9,7 @@ module.exports = {
     },
     devServer: {
         contentBase: path.resolve(__dirname, 'public'),
-        open: false,
+        open: 'Google Chrome',
         port: 1337,
         historyApiFallback: true
     },
