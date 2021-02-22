@@ -8,10 +8,10 @@ import Favorites from '../favorites/favorites';
 import Offer from '../offer/offer';
 import PageNotFound from '../page-not-found/page-not-found';
 
-import offersPropTypes from '../../prop-types/offers-prop-types.js';
+import offersPropTypes from '../../prop-types/offers.js';
 
 const App = ({offers}) => {
-  const favoriteOffers = offers.filter((offer) => offer.isFavorite);
+  const favoriteOffers = offers.filter(({isFavorite}) => isFavorite);
 
   return (
     <Router>

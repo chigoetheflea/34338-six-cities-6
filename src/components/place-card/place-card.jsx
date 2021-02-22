@@ -1,17 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
-import offersPropTypes from '../../prop-types/offers-prop-types.js';
+import offersPropTypes from '../../prop-types/offers';
 
-import {getFormattedRating} from '../../util/util.js';
+import {getFormattedRating} from '../../util/util';
 
-const PlaceCard = ({offer, onHoverHandler, isInFavoritesList}) => {
+const PlaceCard = ({offer, hoverHandler, isInFavoritesList}) => {
   const {previewImage, isPremium, price, title, type, isFavorite, rating, id} = offer;
   const offerLink = `/offer/${id}`;
 
+  const handleOfferHover = () => {
+    hoverHandler(id);
+  };
+
   return (
-    <article className={`${(isInFavoritesList) ? `favorites__card` : `cities__place-card`} place-card`} onMouseEnter={onHoverHandler}>
-      {(isPremium) ? <div className="place-card__mark"><span>Premium</span></div> : ``}
+    <article className={`${(isInFavoritesList) ? `favorites__card` : `cities__place-card`} place-card`} onMouseEnter={handleOfferHover}>
+      {isPremium && <div className="place-card__mark"><span>Premium</span></div>}
       <div className={`${(isInFavoritesList) ? `favorites__image-wrapper` : `cities__image-wrapper`} place-card__image-wrapper`}>
         <Link to={offerLink}>
           <img className="place-card__image" src={previewImage} width="260" height="200" alt={title} />
@@ -49,7 +53,7 @@ const PlaceCard = ({offer, onHoverHandler, isInFavoritesList}) => {
 
 PlaceCard.propTypes = {
   offer: offersPropTypes,
-  onHoverHandler: PropTypes.func.isRequired,
+  hoverHandler: PropTypes.func.isRequired,
   isInFavoritesList: PropTypes.bool.isRequired,
 };
 

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import OffersList from '../offers-list/offers-list';
 
-import offersPropTypes from '../../prop-types/offers-prop-types.js';
+import offersPropTypes from '../../prop-types/offers';
 
 const FavoritesByCity = ({offers, city}) => {
   return (

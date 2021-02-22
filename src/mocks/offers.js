@@ -1,4 +1,4 @@
-import {getRandomInteger} from '../util/util.js';
+import {getRandomInteger} from '../util/util';
 
 const IMG_URL = `http://picsum.photos/248/152`;
 const MIN_PRICE = 100;

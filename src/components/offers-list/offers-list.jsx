@@ -2,12 +2,10 @@ import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import PlaceCard from '../place-card/place-card';
 
-import offersPropTypes from '../../prop-types/offers-prop-types.js';
+import offersPropTypes from '../../prop-types/offers';
 
 const OffersList = ({offers, isInFavoritesList}) => {
-  const [activeOffer, setActiveOffer] = useState({
-    activeOfferId: null
-  });
+  const [, setActiveOffer] = useState(null);
 
   return (
     <>
@@ -17,9 +15,7 @@ const OffersList = ({offers, isInFavoritesList}) => {
             key={`${offer.id}`}
             offer={offer}
             isInFavoritesList={isInFavoritesList}
-            onHoverHandler={() => {
-              setActiveOffer({...activeOffer, activeOfferId: offer.id});
-            }}
+            hoverHandler={setActiveOffer}
           />)
       }
     </>

@@ -10,7 +10,7 @@ const getFormattedRating = (rating) => {
   const roundedRating = Math.round(rating);
 
   return {
-    width: `${RATING_INC * roundedRating}%`
+    width: `${RATING_INC * roundedRating}%`,
   };
 };
 
