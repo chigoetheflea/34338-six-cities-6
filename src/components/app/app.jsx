@@ -8,18 +8,22 @@ import Favorites from '../favorites/favorites';
 import Offer from '../offer/offer';
 import PageNotFound from '../page-not-found/page-not-found';
 
-const App = ({placesCount}) => {
+import offersPropTypes from '../../prop-types/offers.js';
+
+const App = ({offers}) => {
+  const favoriteOffers = offers.filter(({isFavorite}) => isFavorite);
+
   return (
     <Router>
       <Switch>
         <Route exact path="/">
-          <MainPage placesCount={placesCount} />
+          <MainPage offers={offers} />
         </Route>
         <Route exact path="/login">
           <Login />
         </Route>
         <Route exact path="/favorites">
-          <Favorites />
+          <Favorites offers={favoriteOffers} />
         </Route>
         <Route exact path="/offer/:id">
           <Offer />
@@ -33,7 +37,7 @@ const App = ({placesCount}) => {
 };
 
 App.propTypes = {
-  placesCount: PropTypes.number.isRequired,
+  offers: PropTypes.arrayOf(offersPropTypes),
 };
 
 export default App;

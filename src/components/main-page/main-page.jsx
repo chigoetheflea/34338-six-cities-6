@@ -1,27 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import PlaceCard from '../place-card/place-card';
+import OffersList from '../offers-list/offers-list';
 
-const PLACES_TITLES = [
-  `Beautiful & luxurious apartment at great location`,
-  `Wood and stone place`,
-  `Canal View Prinsengracht`,
-  `Nice, cozy, warm big bed apartment`,
-  `Wood and stone place`,
-];
+import offersPropTypes from '../../prop-types/offers';
+import {CITIES} from '../../util/const';
 
-const CITIES = [
-  `Paris`,
-  `Cologne`,
-  `Brussels`,
-  `Amsterdam`,
-  `Hamburg`,
-  `Dusseldorf`,
-];
 
 const DEFAULT_CITY = CITIES[0];
 
-const MainPage = ({placesCount}) => {
+const MainPage = ({offers}) => {
   return (
     <div className="page page--gray page--main">
       <header className="header">
@@ -71,7 +58,7 @@ const MainPage = ({placesCount}) => {
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{placesCount} places to stay in Amsterdam</b>
+              <b className="places__found">{offers.length} places to stay in Amsterdam</b>
               <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by</span>
                 <span className="places__sorting-type" tabIndex="0">
@@ -88,9 +75,10 @@ const MainPage = ({placesCount}) => {
                 </ul>
               </form>
               <div className="cities__places-list places__list tabs__content">
-                {
-                  PLACES_TITLES.map((placeTitle, index) => <PlaceCard key={`pc${index}`} placeTitle={placeTitle} />)
-                }
+                <OffersList
+                  offers={offers}
+                  isInFavoritesList={false}
+                />
               </div>
             </section>
             <div className="cities__right-section">
@@ -104,7 +92,7 @@ const MainPage = ({placesCount}) => {
 };
 
 MainPage.propTypes = {
-  placesCount: PropTypes.number.isRequired,
+  offers: PropTypes.arrayOf(offersPropTypes),
 };
 
 export default MainPage;
