@@ -1,34 +1,29 @@
-import PropTypes from 'prop-types';
+import {number, shape, string, bool, arrayOf} from 'prop-types';
+import locationPropTypes from './location';
 
-const locationPropTypes = PropTypes.shape({
-  latitude: PropTypes.number.isRequired,
-  longitude: PropTypes.number.isRequired,
-  zoom: PropTypes.number.isRequired,
-});
-
-export default PropTypes.shape({
-  bedrooms: PropTypes.number.isRequired,
-  city: PropTypes.shape({
-    location: locationPropTypes.isRequired,
-    name: PropTypes.string.isRequired,
+export default shape({
+  bedrooms: number.isRequired,
+  city: shape({
+    location: shape(locationPropTypes).isRequired,
+    name: string.isRequired,
   }).isRequired,
-  description: PropTypes.string.isRequired,
-  goods: PropTypes.arrayOf(PropTypes.string).isRequired,
-  host: PropTypes.shape({
-    avatarUrl: PropTypes.string.isRequired,
-    id: PropTypes.number.isRequired,
-    isPro: PropTypes.bool.isRequired,
-    name: PropTypes.string.isRequired
+  description: string.isRequired,
+  goods: arrayOf(string).isRequired,
+  host: shape({
+    avatarUrl: string.isRequired,
+    id: number.isRequired,
+    isPro: bool.isRequired,
+    name: string.isRequired
   }).isRequired,
-  id: PropTypes.number.isRequired,
-  images: PropTypes.arrayOf(PropTypes.string).isRequired,
-  isFavorite: PropTypes.bool.isRequired,
-  isPremium: PropTypes.bool.isRequired,
-  location: locationPropTypes.isRequired,
-  maxAdults: PropTypes.number.isRequired,
-  previewImage: PropTypes.string.isRequired,
-  price: PropTypes.number.isRequired,
-  rating: PropTypes.number.isRequired,
-  title: PropTypes.string.isRequired,
-  type: PropTypes.string.isRequired,
+  id: number.isRequired,
+  images: arrayOf(string).isRequired,
+  isFavorite: bool.isRequired,
+  isPremium: bool.isRequired,
+  location: shape(locationPropTypes).isRequired,
+  maxAdults: number.isRequired,
+  previewImage: string.isRequired,
+  price: number.isRequired,
+  rating: number.isRequired,
+  title: string.isRequired,
+  type: string.isRequired,
 });

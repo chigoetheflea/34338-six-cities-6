@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import PropTypes from 'prop-types';
+import {arrayOf, bool} from 'prop-types';
 import PlaceCard from '../place-card/place-card';
 
 import offersPropTypes from '../../prop-types/offers';
@@ -23,8 +23,8 @@ const OffersList = ({offers, isInFavoritesList}) => {
 };
 
 OffersList.propTypes = {
-  offers: PropTypes.arrayOf(offersPropTypes),
-  isInFavoritesList: PropTypes.bool.isRequired,
+  offers: arrayOf(offersPropTypes),
+  isInFavoritesList: bool.isRequired,
 };
 
 export default OffersList;

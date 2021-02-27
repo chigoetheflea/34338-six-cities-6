@@ -1,4 +1,4 @@
-const RATING_INC = 20;
+const RATING_INCREMENT = 20;
 
 const getRandomInteger = (min, max) => {
   const randomInteger = min + Math.random() * (max - min + 1);
@@ -9,9 +9,7 @@ const getRandomInteger = (min, max) => {
 const getFormattedRating = (rating) => {
   const roundedRating = Math.round(rating);
 
-  return {
-    width: `${RATING_INC * roundedRating}%`,
-  };
+  return RATING_INCREMENT * roundedRating;
 };
 
 export {

@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import {func, bool} from 'prop-types';
 import {Link} from 'react-router-dom';
 import offersPropTypes from '../../prop-types/offers';
 
@@ -36,7 +36,7 @@ const PlaceCard = ({offer, hoverHandler, isInFavoritesList}) => {
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={getFormattedRating(rating)} />
+            <span style={{width: `${getFormattedRating(rating)}%`}} />
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
@@ -53,8 +53,8 @@ const PlaceCard = ({offer, hoverHandler, isInFavoritesList}) => {
 
 PlaceCard.propTypes = {
   offer: offersPropTypes,
-  hoverHandler: PropTypes.func.isRequired,
-  isInFavoritesList: PropTypes.bool.isRequired,
+  hoverHandler: func.isRequired,
+  isInFavoritesList: bool.isRequired,
 };
 
 export default PlaceCard;

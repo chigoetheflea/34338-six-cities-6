@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import {bool} from 'prop-types';
 import {Link} from 'react-router-dom';
 
 const InnerPageHeader = ({isUserLoggedIn = true}) => {
@@ -33,7 +33,7 @@ const InnerPageHeader = ({isUserLoggedIn = true}) => {
 };
 
 InnerPageHeader.propTypes = {
-  isUserLoggedIn: PropTypes.bool,
+  isUserLoggedIn: bool,
 };
 
 export default InnerPageHeader;

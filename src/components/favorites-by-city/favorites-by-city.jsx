@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import {string} from 'prop-types';
 import OffersList from '../offers-list/offers-list';
 
 import offersPropTypes from '../../prop-types/offers';
@@ -23,7 +23,7 @@ const FavoritesByCity = ({offers, city}) => {
 
 FavoritesByCity.propTypes = {
   offers: offersPropTypes,
-  city: PropTypes.string.isRequired,
+  city: string.isRequired,
 };
 
 export default FavoritesByCity;
