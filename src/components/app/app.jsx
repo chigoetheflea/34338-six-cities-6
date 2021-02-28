@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import {arrayOf} from 'prop-types';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 
 import MainPage from '../main-page/main-page';
@@ -37,7 +37,7 @@ const App = ({offers}) => {
 };
 
 App.propTypes = {
-  offers: PropTypes.arrayOf(offersPropTypes),
+  offers: arrayOf(offersPropTypes),
 };
 
 export default App;

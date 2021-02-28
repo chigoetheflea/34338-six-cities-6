@@ -1,14 +1,24 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import {arrayOf} from 'prop-types';
 import OffersList from '../offers-list/offers-list';
+import Map from '../map/map';
 
 import offersPropTypes from '../../prop-types/offers';
 import {CITIES} from '../../util/const';
 
-
-const DEFAULT_CITY = CITIES[0];
+const DEFAULT_CITY = {
+  name: CITIES[0],
+  location: {
+    latitude: 52.38333,
+    longitude: 4.9,
+    zoom: 10,
+  },
+};
 
 const MainPage = ({offers}) => {
+  const currentCityLocations = offers.map(({title, location}) => ({title, ...location}));
+  const {name, location} = DEFAULT_CITY;
+
   return (
     <div className="page page--gray page--main">
       <header className="header">
@@ -40,7 +50,7 @@ const MainPage = ({offers}) => {
             <ul className="locations__list tabs__list">
               {
                 CITIES.map((city) => {
-                  const tabActiveClass = city === DEFAULT_CITY ? ` tabs__item--active` : ``;
+                  const tabActiveClass = city === name ? ` tabs__item--active` : ``;
 
                   return (
                     <li className="locations__item" key={city}>
@@ -82,7 +92,12 @@ const MainPage = ({offers}) => {
               </div>
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map" />
+              <section className="cities__map map">
+                <Map
+                  city={location}
+                  points={currentCityLocations}
+                />
+              </section>
             </div>
           </div>
         </div>
@@ -92,7 +107,7 @@ const MainPage = ({offers}) => {
 };
 
 MainPage.propTypes = {
-  offers: PropTypes.arrayOf(offersPropTypes),
+  offers: arrayOf(offersPropTypes),
 };
 
 export default MainPage;

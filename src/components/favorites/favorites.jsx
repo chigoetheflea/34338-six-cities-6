@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import {arrayOf} from 'prop-types';
 import InnerPageHeader from '../inner-page-header/inner-page-header';
 import FavoritesByCity from '../favorites-by-city/favorites-by-city';
 
@@ -37,7 +37,7 @@ const Favorites = ({offers}) => {
 };
 
 Favorites.propTypes = {
-  offers: PropTypes.arrayOf(offersPropTypes),
+  offers: arrayOf(offersPropTypes),
 };
 
 export default Favorites;
