@@ -11,12 +11,13 @@ const DEFAULT_CITY = {
   location: {
     latitude: 52.38333,
     longitude: 4.9,
-    zoom: 10
+    zoom: 10,
   },
 };
 
 const MainPage = ({offers}) => {
-  const currentCityLocations = offers.map((offer) => ({title: offer.title, ...offer.location}));
+  const currentCityLocations = offers.map(({title, location}) => ({title, ...location}));
+  const {name, location} = DEFAULT_CITY;
 
   return (
     <div className="page page--gray page--main">
@@ -49,7 +50,7 @@ const MainPage = ({offers}) => {
             <ul className="locations__list tabs__list">
               {
                 CITIES.map((city) => {
-                  const tabActiveClass = city === DEFAULT_CITY.name ? ` tabs__item--active` : ``;
+                  const tabActiveClass = city === name ? ` tabs__item--active` : ``;
 
                   return (
                     <li className="locations__item" key={city}>
@@ -93,7 +94,7 @@ const MainPage = ({offers}) => {
             <div className="cities__right-section">
               <section className="cities__map map">
                 <Map
-                  city={DEFAULT_CITY.location}
+                  city={location}
                   points={currentCityLocations}
                 />
               </section>

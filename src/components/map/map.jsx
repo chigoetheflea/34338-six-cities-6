@@ -5,25 +5,29 @@ import locationPropTypes from '../../prop-types/location';
 
 import 'leaflet/dist/leaflet.css';
 
-const ICON = leaflet.icon({
+const icon = leaflet.icon({
   iconUrl: `img/pin.svg`,
   iconSize: [20, 30]
 });
 
-const MAP_ID = `map`;
-const MAP_WIDTH = `100%`;
-const MAP_HEIGHT = `100%`;
+const LeafletMap = {
+  id: `map`,
+  width: `100%`,
+  height: `100%`,
+};
 
 const Map = ({city, points}) => {
   const mapRef = useRef();
+  const {id, width, height} = LeafletMap;
+  const {latitude, longitude, zoom} = city;
 
   useEffect(() => {
-    mapRef.current = leaflet.map(MAP_ID, {
+    mapRef.current = leaflet.map(id, {
       center: {
-        lat: city.latitude,
-        lng: city.longitude,
+        lat: latitude,
+        lng: longitude,
       },
-      zoom: city.zoom,
+      zoom,
     });
 
     leaflet
@@ -38,7 +42,7 @@ const Map = ({city, points}) => {
         lng: point.longitude,
       },
       {
-        icon: ICON,
+        icon,
       })
       .addTo(mapRef.current)
       .bindPopup(point.title);
@@ -51,8 +55,8 @@ const Map = ({city, points}) => {
 
   return (
     <div
-      id={MAP_ID}
-      style={{width: MAP_WIDTH, height: MAP_HEIGHT}}
+      id={id}
+      style={{width, height}}
       ref={mapRef}
     />
   );
