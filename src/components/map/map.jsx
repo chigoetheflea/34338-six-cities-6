@@ -7,22 +7,21 @@ import 'leaflet/dist/leaflet.css';
 
 const icon = leaflet.icon({
   iconUrl: `img/pin.svg`,
-  iconSize: [20, 30]
+  iconSize: [20, 30],
 });
 
 const LeafletMap = {
-  id: `map`,
-  width: `100%`,
-  height: `100%`,
+  ID: `map`,
+  WIDTH: `100%`,
+  HEIGHT: `100%`,
 };
 
 const Map = ({city, points}) => {
   const mapRef = useRef();
-  const {id, width, height} = LeafletMap;
   const {latitude, longitude, zoom} = city;
 
   useEffect(() => {
-    mapRef.current = leaflet.map(id, {
+    mapRef.current = leaflet.map(LeafletMap.ID, {
       center: {
         lat: latitude,
         lng: longitude,
@@ -37,9 +36,11 @@ const Map = ({city, points}) => {
       .addTo(mapRef.current);
 
     points.forEach((point) => {
+      const {latitude: lat, longitude: lng} = point;
+
       leaflet.marker({
-        lat: point.latitude,
-        lng: point.longitude,
+        lat,
+        lng,
       },
       {
         icon,
@@ -55,8 +56,8 @@ const Map = ({city, points}) => {
 
   return (
     <div
-      id={id}
-      style={{width, height}}
+      id={LeafletMap.ID}
+      style={{width: LeafletMap.WIDTH, height: LeafletMap.HEIGHT}}
       ref={mapRef}
     />
   );

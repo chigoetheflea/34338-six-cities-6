@@ -1,11 +1,11 @@
 import React from 'react';
-import {func, bool} from 'prop-types';
+import {func, shape, string} from 'prop-types';
 import {Link} from 'react-router-dom';
 import offersPropTypes from '../../prop-types/offers';
 
 import {getFormattedRating} from '../../util/util';
 
-const PlaceCard = ({offer, hoverHandler, isInFavoritesList}) => {
+const PlaceCard = ({offer, hoverHandler, classes}) => {
   const {previewImage, isPremium, price, title, type, isFavorite, rating, id} = offer;
   const offerLink = `/offer/${id}`;
 
@@ -14,14 +14,14 @@ const PlaceCard = ({offer, hoverHandler, isInFavoritesList}) => {
   };
 
   return (
-    <article className={`${(isInFavoritesList) ? `favorites__card` : `cities__place-card`} place-card`} onMouseEnter={handleOfferHover}>
+    <article className={`${classes.MAIN_CLASS} place-card`} onMouseEnter={handleOfferHover}>
       {isPremium && <div className="place-card__mark"><span>Premium</span></div>}
-      <div className={`${(isInFavoritesList) ? `favorites__image-wrapper` : `cities__image-wrapper`} place-card__image-wrapper`}>
+      <div className={`${classes.IMAGE_CLASS} place-card__image-wrapper`}>
         <Link to={offerLink}>
           <img className="place-card__image" src={previewImage} width="260" height="200" alt={title} />
         </Link>
       </div>
-      <div className={`${(isInFavoritesList) ? `favorites__card-info` : ``} place-card__info`}>
+      <div className={`${classes.INFO_CLASS} place-card__info`}>
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
             <b className="place-card__price-value">&euro;{price}</b>
@@ -54,7 +54,11 @@ const PlaceCard = ({offer, hoverHandler, isInFavoritesList}) => {
 PlaceCard.propTypes = {
   offer: offersPropTypes,
   hoverHandler: func.isRequired,
-  isInFavoritesList: bool.isRequired,
+  classes: shape({
+    MAIN_CLASS: string.isRequired,
+    IMAGE_CLASS: string.isRequired,
+    INFO_CLASS: string.isRequired,
+  }).isRequired,
 };
 
 export default PlaceCard;

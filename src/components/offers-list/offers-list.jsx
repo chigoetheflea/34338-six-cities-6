@@ -1,30 +1,50 @@
 import React, {useState} from 'react';
-import {arrayOf, bool} from 'prop-types';
-import PlaceCard from '../place-card/place-card';
+import {arrayOf, string} from 'prop-types';
 
+import PlaceCardBasic from '../place-card-basic/place-card-basic';
+import PlaceCardFavorite from '../place-card-favorite/place-card-favorite';
+import PlaceCardRelated from '../place-card-related/place-card-related';
+
+import {PlaceCardType} from '../../util/const';
 import offersPropTypes from '../../prop-types/offers';
 
-const OffersList = ({offers, isInFavoritesList}) => {
+const getPlaceCardByType = (type, offer, hoverHandler) => {
+  switch (type) {
+    case PlaceCardType.FAVORITE:
+      return <PlaceCardFavorite
+        key={`${offer.id}`}
+        offer={offer}
+        hoverHandler={hoverHandler}
+      />;
+
+    case PlaceCardType.RELATED:
+      return <PlaceCardRelated
+        key={`${offer.id}`}
+        offer={offer}
+        hoverHandler={hoverHandler}
+      />;
+  }
+
+  return <PlaceCardBasic
+    key={`${offer.id}`}
+    offer={offer}
+    hoverHandler={hoverHandler}
+  />;
+};
+
+const OffersList = ({offers, type}) => {
   const [, setActiveOffer] = useState(null);
 
   return (
     <>
-      {
-        offers.map((offer) =>
-          <PlaceCard
-            key={`${offer.id}`}
-            offer={offer}
-            isInFavoritesList={isInFavoritesList}
-            hoverHandler={setActiveOffer}
-          />)
-      }
+      {offers.map((offer) => getPlaceCardByType(type, offer, setActiveOffer))}
     </>
   );
 };
 
 OffersList.propTypes = {
   offers: arrayOf(offersPropTypes),
-  isInFavoritesList: bool.isRequired,
+  type: string.isRequired,
 };
 
 export default OffersList;

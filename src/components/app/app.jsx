@@ -8,10 +8,13 @@ import Favorites from '../favorites/favorites';
 import Offer from '../offer/offer';
 import PageNotFound from '../page-not-found/page-not-found';
 
-import offersPropTypes from '../../prop-types/offers.js';
+import {getSortedReviews} from '../../util/util';
+import offersPropTypes from '../../prop-types/offers';
+import reviewPropTypes from '../../prop-types/reviews';
 
-const App = ({offers}) => {
+const App = ({offers, reviews}) => {
   const favoriteOffers = offers.filter(({isFavorite}) => isFavorite);
+  const sortedReviews = getSortedReviews(reviews);
 
   return (
     <Router>
@@ -26,7 +29,10 @@ const App = ({offers}) => {
           <Favorites offers={favoriteOffers} />
         </Route>
         <Route exact path="/offer/:id">
-          <Offer />
+          <Offer
+            reviews={sortedReviews}
+            offers={offers}
+          />
         </Route>
         <Route>
           <PageNotFound />
@@ -38,6 +44,7 @@ const App = ({offers}) => {
 
 App.propTypes = {
   offers: arrayOf(offersPropTypes),
+  reviews: arrayOf(reviewPropTypes),
 };
 
 export default App;
