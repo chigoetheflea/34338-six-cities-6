@@ -2,8 +2,6 @@ import {MONTHES} from './const';
 
 const RATING_INCREMENT = 20;
 
-const isItNeedsZero = (source) => source < 10 ? `0` + source : source;
-
 const getRandomInteger = (min, max) => {
   const randomInteger = min + Math.random() * (max - min + 1);
 
@@ -24,7 +22,9 @@ const getFormattedDate = ({sourceDate, dateFormat}) => {
 
   switch (dateFormat) {
     case `yyyy-mm-dd`:
-      return `${year}-${isItNeedsZero(month + 1)}-${isItNeedsZero(day + 1)}`;
+      const realMonth = month + 1;
+
+      return `${year}-${realMonth < 10 ? `0${realMonth}` : realMonth}-${day < 10 ? `0${day}` : day}`;
 
     case `month-yyyy`:
       return `${MONTHES[month]} ${year}`;
@@ -36,16 +36,12 @@ const getFormattedDate = ({sourceDate, dateFormat}) => {
 const getSortedReviews = (reviews) => {
   const reviewsForSorting = [...reviews];
 
-  reviewsForSorting.sort((firstReview, secondReview) => {
-    if (firstReview.date < secondReview.date) {
-      return -1;
+  reviewsForSorting.sort((prevReview, nextReview) => {
+    if (prevReview.date === nextReview.date) {
+      return 0;
     }
 
-    if (firstReview.date > secondReview.date) {
-      return 1;
-    }
-
-    return 0;
+    return prevReview.date < nextReview.date ? -1 : 1;
   });
 
   return reviewsForSorting;

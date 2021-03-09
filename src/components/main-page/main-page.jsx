@@ -78,7 +78,7 @@ const MainPage = ({offers}) => {
               <div className="cities__places-list places__list tabs__content">
                 <OffersList
                   offers={offers}
-                  type={PlaceCardType.BASIC}
+                  cardType={PlaceCardType.BASIC}
                 />
               </div>
             </section>

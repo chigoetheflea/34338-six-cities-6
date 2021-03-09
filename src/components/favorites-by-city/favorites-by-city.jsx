@@ -18,7 +18,7 @@ const FavoritesByCity = ({offers, city}) => {
       <div className="favorites__places">
         <OffersList
           offers={offers}
-          type={PlaceCardType.FAVORITE}
+          cardType={PlaceCardType.FAVORITE}
         />
       </div>
     </li>

@@ -32,9 +32,9 @@ const DEFAULT_CITY = {
 };
 
 const PlaceCardType = {
-  BASIC: `basic`,
-  FAVORITE: `favorite`,
-  RELATED: `related`,
+  BASIC: `BASIC`,
+  FAVORITE: `FAVORITE`,
+  RELATED: `RELATED`,
 };
 
 export {

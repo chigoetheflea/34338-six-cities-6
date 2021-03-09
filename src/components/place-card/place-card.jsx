@@ -1,27 +1,46 @@
 import React from 'react';
-import {func, shape, string} from 'prop-types';
+import {func, string} from 'prop-types';
 import {Link} from 'react-router-dom';
-import offersPropTypes from '../../prop-types/offers';
 
+import offersPropTypes from '../../prop-types/offers';
 import {getFormattedRating} from '../../util/util';
 
-const PlaceCard = ({offer, hoverHandler, classes}) => {
+const PlaceCardClasses = {
+  BASIC: {
+    main: `cities__place-card`,
+    image: `cities__image-wrapper`,
+    info: ``,
+  },
+  FAVORITE: {
+    main: `favorites__card`,
+    image: `favorites__image-wrapper`,
+    info: `favorites__card-info`,
+  },
+  RELATED: {
+    main: `near-places__card`,
+    image: `near-places__image-wrapper`,
+    info: ``,
+  },
+};
+
+const PlaceCard = ({offer, setActiveOffer, cardType}) => {
   const {previewImage, isPremium, price, title, type, isFavorite, rating, id} = offer;
   const offerLink = `/offer/${id}`;
+  const cardClasses = PlaceCardClasses[cardType];
 
   const handleOfferHover = () => {
-    hoverHandler(id);
+    setActiveOffer(id);
   };
 
   return (
-    <article className={`${classes.MAIN_CLASS} place-card`} onMouseEnter={handleOfferHover}>
+    <article className={`${cardClasses.main} place-card`} onMouseEnter={handleOfferHover}>
       {isPremium && <div className="place-card__mark"><span>Premium</span></div>}
-      <div className={`${classes.IMAGE_CLASS} place-card__image-wrapper`}>
+      <div className={`${cardClasses.image} place-card__image-wrapper`}>
         <Link to={offerLink}>
           <img className="place-card__image" src={previewImage} width="260" height="200" alt={title} />
         </Link>
       </div>
-      <div className={`${classes.INFO_CLASS} place-card__info`}>
+      <div className={`${cardClasses.info} place-card__info`}>
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
             <b className="place-card__price-value">&euro;{price}</b>
@@ -53,12 +72,8 @@ const PlaceCard = ({offer, hoverHandler, classes}) => {
 
 PlaceCard.propTypes = {
   offer: offersPropTypes,
-  hoverHandler: func.isRequired,
-  classes: shape({
-    MAIN_CLASS: string.isRequired,
-    IMAGE_CLASS: string.isRequired,
-    INFO_CLASS: string.isRequired,
-  }).isRequired,
+  setActiveOffer: func.isRequired,
+  cardType: string.isRequired,
 };
 
 export default PlaceCard;

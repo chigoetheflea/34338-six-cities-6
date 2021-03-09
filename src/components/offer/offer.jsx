@@ -158,7 +158,7 @@ const Offer = ({reviews, offers}) => {
             <div className="near-places__list places__list">
               <OffersList
                 offers={neighbourhoodOffers}
-                type={PlaceCardType.RELATED}
+                cardType={PlaceCardType.RELATED}
               />
             </div>
           </section>
