@@ -1,8 +1,9 @@
 import React from 'react';
-import {string} from 'prop-types';
+import {string, arrayOf} from 'prop-types';
 import OffersList from '../offers-list/offers-list';
 
 import offersPropTypes from '../../prop-types/offers';
+import {PlaceCardType} from '../../util/const';
 
 const FavoritesByCity = ({offers, city}) => {
   return (
@@ -15,14 +16,17 @@ const FavoritesByCity = ({offers, city}) => {
         </div>
       </div>
       <div className="favorites__places">
-        <OffersList offers={offers} isInFavoritesList />
+        <OffersList
+          offers={offers}
+          cardType={PlaceCardType.FAVORITE}
+        />
       </div>
     </li>
   );
 };
 
 FavoritesByCity.propTypes = {
-  offers: offersPropTypes,
+  offers: arrayOf(offersPropTypes),
   city: string.isRequired,
 };
 

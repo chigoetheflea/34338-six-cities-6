@@ -5,13 +5,13 @@ module.exports = {
     output: {
         filename: 'bundle.js',
         path: path.resolve(__dirname, 'public'),
-        publicPath: '/'
+        publicPath: '/',
     },
     devServer: {
         contentBase: path.resolve(__dirname, 'public'),
         open: true,
         port: 1337,
-        historyApiFallback: true
+        historyApiFallback: true,
     },
     module: {
         rules: [
@@ -24,7 +24,7 @@ module.exports = {
             },
             {
                 test: /\.css$/i,
-                use: ['style-loader', 'css-loader']
+                use: ['style-loader', 'css-loader'],
             },
             {
                 test: /\.(png|jpe?g|gif)$/i,
@@ -33,7 +33,7 @@ module.exports = {
         ],
     },
     resolve: {
-        extensions: ['.js', '.jsx']
+        extensions: ['.js', '.jsx'],
     },
     devtool: 'source-map',
 };

@@ -4,16 +4,7 @@ import OffersList from '../offers-list/offers-list';
 import Map from '../map/map';
 
 import offersPropTypes from '../../prop-types/offers';
-import {CITIES} from '../../util/const';
-
-const DEFAULT_CITY = {
-  name: CITIES[0],
-  location: {
-    latitude: 52.38333,
-    longitude: 4.9,
-    zoom: 10,
-  },
-};
+import {CITIES, DEFAULT_CITY, PlaceCardType} from '../../util/const';
 
 const MainPage = ({offers}) => {
   const currentCityLocations = offers.map(({title, location}) => ({title, ...location}));
@@ -87,7 +78,7 @@ const MainPage = ({offers}) => {
               <div className="cities__places-list places__list tabs__content">
                 <OffersList
                   offers={offers}
-                  isInFavoritesList={false}
+                  cardType={PlaceCardType.BASIC}
                 />
               </div>
             </section>

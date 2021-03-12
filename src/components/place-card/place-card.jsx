@@ -1,27 +1,52 @@
 import React from 'react';
-import {func, bool} from 'prop-types';
+import {func, string} from 'prop-types';
 import {Link} from 'react-router-dom';
-import offersPropTypes from '../../prop-types/offers';
 
+import offersPropTypes from '../../prop-types/offers';
 import {getFormattedRating} from '../../util/util';
 
-const PlaceCard = ({offer, hoverHandler, isInFavoritesList}) => {
+const getCardClass = (cardType) => {
+  switch (cardType) {
+    case `FAVORITE`:
+      return {
+        main: `favorites__card`,
+        image: `favorites__image-wrapper`,
+        info: `favorites__card-info`,
+      };
+
+    case `RELATED`:
+      return {
+        main: `near-places__card`,
+        image: `near-places__image-wrapper`,
+        info: ``,
+      };
+  }
+
+  return {
+    main: `cities__place-card`,
+    image: `cities__image-wrapper`,
+    info: ``,
+  };
+};
+
+const PlaceCard = ({offer, setActiveOffer, cardType}) => {
   const {previewImage, isPremium, price, title, type, isFavorite, rating, id} = offer;
   const offerLink = `/offer/${id}`;
+  const cardClasses = getCardClass(cardType);
 
   const handleOfferHover = () => {
-    hoverHandler(id);
+    setActiveOffer(id);
   };
 
   return (
-    <article className={`${(isInFavoritesList) ? `favorites__card` : `cities__place-card`} place-card`} onMouseEnter={handleOfferHover}>
+    <article className={`${cardClasses.main} place-card`} onMouseEnter={handleOfferHover}>
       {isPremium && <div className="place-card__mark"><span>Premium</span></div>}
-      <div className={`${(isInFavoritesList) ? `favorites__image-wrapper` : `cities__image-wrapper`} place-card__image-wrapper`}>
+      <div className={`${cardClasses.image} place-card__image-wrapper`}>
         <Link to={offerLink}>
           <img className="place-card__image" src={previewImage} width="260" height="200" alt={title} />
         </Link>
       </div>
-      <div className={`${(isInFavoritesList) ? `favorites__card-info` : ``} place-card__info`}>
+      <div className={`${cardClasses.info} place-card__info`}>
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
             <b className="place-card__price-value">&euro;{price}</b>
@@ -53,8 +78,8 @@ const PlaceCard = ({offer, hoverHandler, isInFavoritesList}) => {
 
 PlaceCard.propTypes = {
   offer: offersPropTypes,
-  hoverHandler: func.isRequired,
-  isInFavoritesList: bool.isRequired,
+  setActiveOffer: func.isRequired,
+  cardType: string.isRequired,
 };
 
 export default PlaceCard;

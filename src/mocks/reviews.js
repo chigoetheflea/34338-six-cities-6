@@ -2,43 +2,39 @@ const IMG_URL = `http://picsum.photos/248/152`;
 
 export default [
   {
-    photo: `${IMG_URL}?r=${Math.random()}`,
-    name: `J. Smith`,
-    rating: 3,
-    date: `April 2019`,
-    review: `Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.`,
-    id: `review-1`,
+    comment: `A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.`,
+    date: `2019-05-01T14:13:56.569Z`,
+    id: 1,
+    rating: 4,
+    user: {
+      avatarUrl: `${IMG_URL}?r=${Math.random()}`,
+      id: 1,
+      isPro: false,
+      name: `Max`
+    }
   },
   {
-    photo: `${IMG_URL}?r=${Math.random()}`,
-    name: `J. Smith`,
+    comment: `A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.`,
+    date: `2020-12-08T14:13:56.569Z`,
+    id: 2,
     rating: 3,
-    date: `April 2019`,
-    review: `Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.`,
-    id: `review-2`,
+    user: {
+      avatarUrl: `${IMG_URL}?r=${Math.random()}`,
+      id: 2,
+      isPro: false,
+      name: `Bob`
+    }
   },
   {
-    photo: `${IMG_URL}?r=${Math.random()}`,
-    name: `J. Smith`,
-    rating: 3,
-    date: `April 2019`,
-    review: `Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.`,
-    id: `review-3`,
-  },
-  {
-    photo: `${IMG_URL}?r=${Math.random()}`,
-    name: `J. Smith`,
-    rating: 3,
-    date: `April 2019`,
-    review: `Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.`,
-    id: `review-4`,
-  },
-  {
-    photo: `${IMG_URL}?r=${Math.random()}`,
-    name: `J. Smith`,
-    rating: 3,
-    date: `April 2019`,
-    review: `Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.`,
-    id: `review-5`,
+    comment: `A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.`,
+    date: `2019-03-08T14:13:56.569Z`,
+    id: 3,
+    rating: 2,
+    user: {
+      avatarUrl: `${IMG_URL}?r=${Math.random()}`,
+      id: 3,
+      isPro: false,
+      name: `Stive`
+    }
   },
 ];

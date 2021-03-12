@@ -1,10 +1,9 @@
 import React, {useState} from 'react';
-import {arrayOf, bool} from 'prop-types';
+import {arrayOf, string} from 'prop-types';
 import PlaceCard from '../place-card/place-card';
-
 import offersPropTypes from '../../prop-types/offers';
 
-const OffersList = ({offers, isInFavoritesList}) => {
+const OffersList = ({offers, cardType}) => {
   const [, setActiveOffer] = useState(null);
 
   return (
@@ -14,9 +13,10 @@ const OffersList = ({offers, isInFavoritesList}) => {
           <PlaceCard
             key={`${offer.id}`}
             offer={offer}
-            isInFavoritesList={isInFavoritesList}
-            hoverHandler={setActiveOffer}
-          />)
+            cardType={cardType}
+            setActiveOffer={setActiveOffer}
+          />
+        )
       }
     </>
   );
@@ -24,7 +24,7 @@ const OffersList = ({offers, isInFavoritesList}) => {
 
 OffersList.propTypes = {
   offers: arrayOf(offersPropTypes),
-  isInFavoritesList: bool.isRequired,
+  cardType: string.isRequired,
 };
 
 export default OffersList;
