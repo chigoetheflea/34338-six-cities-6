@@ -5,28 +5,34 @@ import {Link} from 'react-router-dom';
 import offersPropTypes from '../../prop-types/offers';
 import {getFormattedRating} from '../../util/util';
 
-const PlaceCardClasses = {
-  BASIC: {
+const getCardClass = (cardType) => {
+  switch (cardType) {
+    case `FAVORITE`:
+      return {
+        main: `favorites__card`,
+        image: `favorites__image-wrapper`,
+        info: `favorites__card-info`,
+      };
+
+    case `RELATED`:
+      return {
+        main: `near-places__card`,
+        image: `near-places__image-wrapper`,
+        info: ``,
+      };
+  }
+
+  return {
     main: `cities__place-card`,
     image: `cities__image-wrapper`,
     info: ``,
-  },
-  FAVORITE: {
-    main: `favorites__card`,
-    image: `favorites__image-wrapper`,
-    info: `favorites__card-info`,
-  },
-  RELATED: {
-    main: `near-places__card`,
-    image: `near-places__image-wrapper`,
-    info: ``,
-  },
+  };
 };
 
 const PlaceCard = ({offer, setActiveOffer, cardType}) => {
   const {previewImage, isPremium, price, title, type, isFavorite, rating, id} = offer;
   const offerLink = `/offer/${id}`;
-  const cardClasses = PlaceCardClasses[cardType];
+  const cardClasses = getCardClass(cardType);
 
   const handleOfferHover = () => {
     setActiveOffer(id);

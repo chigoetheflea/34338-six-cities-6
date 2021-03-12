@@ -15,7 +15,8 @@ const OffersList = ({offers, cardType}) => {
             offer={offer}
             cardType={cardType}
             setActiveOffer={setActiveOffer}
-          />)
+          />
+        )
       }
     </>
   );

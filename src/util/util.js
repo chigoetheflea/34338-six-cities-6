@@ -17,14 +17,14 @@ const getFormattedRating = (rating) => {
 const getFormattedDate = ({sourceDate, dateFormat}) => {
   const date = new Date(sourceDate);
   const year = date.getFullYear();
-  const month = date.getMonth();
+  let month = date.getMonth();
   const day = date.getDate();
 
   switch (dateFormat) {
     case `yyyy-mm-dd`:
-      const realMonth = month + 1;
+      month = month + 1;
 
-      return `${year}-${realMonth < 10 ? `0${realMonth}` : realMonth}-${day < 10 ? `0${day}` : day}`;
+      return `${year}-${month < 10 ? `0${month}` : month}-${day < 10 ? `0${day}` : day}`;
 
     case `month-yyyy`:
       return `${MONTHES[month]} ${year}`;
