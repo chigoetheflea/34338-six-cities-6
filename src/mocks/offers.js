@@ -42,12 +42,12 @@ export default [
   {
     bedrooms: 3,
     city: {
+      name: `Paris`,
       location: {
-        latitude: 52.38333,
-        longitude: 4.9,
-        zoom: 10
-      },
-      name: `Amsterdam`
+        latitude: 48.856663,
+        longitude: 2.351556,
+        zoom: 10,
+      }
     },
     description: `A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.`,
     goods: [`Heating`, `Kitchen`, `Cable TV`, `Washing machine`, `Coffee machine`, `Dishwasher`],
@@ -62,8 +62,8 @@ export default [
     isFavorite: true,
     isPremium: true,
     location: {
-      latitude: 52.369553943508,
-      longitude: 4.85309666406198,
+      latitude: 48.866128,
+      longitude: 2.344462,
       zoom: 8
     },
     maxAdults: 4,

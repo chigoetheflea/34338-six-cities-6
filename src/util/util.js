@@ -47,9 +47,12 @@ const getSortedReviews = (reviews) => {
   return reviewsForSorting;
 };
 
+const getFilteredOffersByCity = (offers, currentCity) => offers.filter(({city}) => city.name === currentCity.name);
+
 export {
   getRandomInteger,
-  getFormattedRating,
   getFormattedDate,
+  getFormattedRating,
   getSortedReviews,
+  getFilteredOffersByCity,
 };

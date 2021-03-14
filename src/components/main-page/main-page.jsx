@@ -1,14 +1,17 @@
 import React from 'react';
+import {connect} from 'react-redux';
 import {arrayOf} from 'prop-types';
+
 import OffersList from '../offers-list/offers-list';
+import CitiesList from '../cities-list/cities-list';
 import Map from '../map/map';
-
 import offersPropTypes from '../../prop-types/offers';
-import {CITIES, DEFAULT_CITY, PlaceCardType} from '../../util/const';
+import cityPropTypes from '../../prop-types/city';
+import {CITIES, PlaceCardType} from '../../util/const';
 
-const MainPage = ({offers}) => {
+const MainPage = ({offers, city}) => {
   const currentCityLocations = offers.map(({title, location}) => ({title, ...location}));
-  const {name, location} = DEFAULT_CITY;
+  const {name, location} = city;
 
   return (
     <div className="page page--gray page--main">
@@ -36,30 +39,12 @@ const MainPage = ({offers}) => {
 
       <main className="page__main page__main--index">
         <h1 className="visually-hidden">Cities</h1>
-        <div className="tabs">
-          <section className="locations container">
-            <ul className="locations__list tabs__list">
-              {
-                CITIES.map((city) => {
-                  const tabActiveClass = city === name ? ` tabs__item--active` : ``;
-
-                  return (
-                    <li className="locations__item" key={city}>
-                      <a className={`locations__item-link tabs__item${tabActiveClass}`} href="#">
-                        <span>{city}</span>
-                      </a>
-                    </li>
-                  );
-                })
-              }
-            </ul>
-          </section>
-        </div>
+        <CitiesList cities={CITIES}/>
         <div className="cities">
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{offers.length} places to stay in Amsterdam</b>
+              <b className="places__found">{offers.length} places to stay in {name}</b>
               <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by</span>
                 <span className="places__sorting-type" tabIndex="0">
@@ -99,6 +84,13 @@ const MainPage = ({offers}) => {
 
 MainPage.propTypes = {
   offers: arrayOf(offersPropTypes),
+  city: cityPropTypes.isRequired,
 };
 
-export default MainPage;
+const mapStateToProps = (state) => ({
+  city: state.city,
+  offers: state.offers,
+});
+
+export {MainPage};
+export default connect(mapStateToProps)(MainPage);
