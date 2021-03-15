@@ -52,7 +52,7 @@ const Map = ({city, points}) => {
     return () => {
       mapRef.current.remove();
     };
-  }, []);
+  }, [points]);
 
   return (
     <div

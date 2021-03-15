@@ -17,10 +17,12 @@ const Favorites = ({offers}) => {
             <h1 className="favorites__title">Saved listing</h1>
             <ul className="favorites__list">
               {CITIES.map((city) => {
-                const offersInCity = offers.filter(({city: {name}}) => name === city);
+                const {name: currentCityName} = city;
+
+                const offersInCity = offers.filter(({city: {name}}) => name === currentCityName);
 
                 return (
-                  offersInCity.length > 0 && <FavoritesByCity key={city} offers={offersInCity} city={city} />
+                  offersInCity.length > 0 && <FavoritesByCity key={currentCityName} offers={offersInCity} city={currentCityName} />
                 );
               })}
             </ul>
