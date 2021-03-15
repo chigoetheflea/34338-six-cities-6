@@ -19,13 +19,12 @@ const CitiesList = (props) => {
 
               return (
                 <li className="locations__item" key={name}>
-                  <a
+                  <button
                     className={`locations__item-link tabs__item${tabActiveClass}`}
-                    href="#"
                     onClick={handleCityChange.bind(null, city)}
                   >
                     <span>{name}</span>
-                  </a>
+                  </button>
                 </li>
               );
             })
@@ -49,9 +48,9 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   handleCityChange(city) {
     dispatch(ActionCreator.changeCity(city));
+
     dispatch(ActionCreator.getOffers());
   },
 });
 
-export {CitiesList};
 export default connect(mapStateToProps, mapDispatchToProps)(CitiesList);

@@ -19,7 +19,7 @@ const Favorites = ({offers}) => {
               {CITIES.map((city) => {
                 const {name: currentCityName} = city;
 
-                const offersInCity = offers.filter(({city: offerCity}) => offerCity.name === currentCityName);
+                const offersInCity = offers.filter(({city: {name}}) => name === currentCityName);
 
                 return (
                   offersInCity.length > 0 && <FavoritesByCity key={currentCityName} offers={offersInCity} city={currentCityName} />
