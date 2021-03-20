@@ -74,9 +74,20 @@ const PlaceCardType = {
   RELATED: `RELATED`,
 };
 
+const SortingType = {
+  POPULAR: `Popular`,
+  PRICE_INCREASE: `Price: low to high`,
+  PRICE_DECREASE: `Price: high to low`,
+  TOP_RATED: `Top rated first`,
+};
+
+const DEFAULT_SORTING = SortingType.POPULAR;
+
 export {
   CITIES,
   MONTHES,
   DEFAULT_CITY,
   PlaceCardType,
+  DEFAULT_SORTING,
+  SortingType,
 };

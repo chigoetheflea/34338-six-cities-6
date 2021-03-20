@@ -1,12 +1,17 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {arrayOf, func} from 'prop-types';
-import {ActionCreator} from '../../store/actions';
 
+import {ActionCreator} from '../../store/actions';
 import cityPropTypes from '../../prop-types/city';
 
+
 const CitiesList = (props) => {
-  const {cities, city: currentCity, handleCityChange} = props;
+  const {cities, city: currentCity, updateCity} = props;
+
+  const handleCityChange = (city) => {
+    updateCity(city);
+  };
 
   return (
     <div className="tabs">
@@ -38,7 +43,7 @@ const CitiesList = (props) => {
 CitiesList.propTypes = {
   cities: arrayOf(cityPropTypes).isRequired,
   city: cityPropTypes.isRequired,
-  handleCityChange: func.isRequired,
+  updateCity: func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -46,9 +51,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  handleCityChange(city) {
+  updateCity(city) {
     dispatch(ActionCreator.changeCity(city));
-
     dispatch(ActionCreator.getOffers());
   },
 });
