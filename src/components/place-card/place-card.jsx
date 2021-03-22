@@ -1,7 +1,9 @@
 import React from 'react';
+import {connect} from 'react-redux';
 import {func, string} from 'prop-types';
 import {Link} from 'react-router-dom';
 
+import {ActionCreator} from '../../store/actions';
 import offersPropTypes from '../../prop-types/offers';
 import {getFormattedRating} from '../../util/util';
 
@@ -29,17 +31,21 @@ const getCardClass = (cardType) => {
   };
 };
 
-const PlaceCard = ({offer, setActiveOffer, cardType}) => {
+const PlaceCard = ({offer, cardType, updateActiveOffer}) => {
   const {previewImage, isPremium, price, title, type, isFavorite, rating, id} = offer;
   const offerLink = `/offer/${id}`;
   const cardClasses = getCardClass(cardType);
 
-  const handleOfferHover = () => {
-    setActiveOffer(id);
+  const handleOfferHoverIn = () => {
+    updateActiveOffer(id);
+  };
+
+  const handleOfferHoverOut = () => {
+    updateActiveOffer(null);
   };
 
   return (
-    <article className={`${cardClasses.main} place-card`} onMouseEnter={handleOfferHover}>
+    <article className={`${cardClasses.main} place-card`} onMouseEnter={handleOfferHoverIn} onMouseLeave={handleOfferHoverOut}>
       {isPremium && <div className="place-card__mark"><span>Premium</span></div>}
       <div className={`${cardClasses.image} place-card__image-wrapper`}>
         <Link to={offerLink}>
@@ -78,8 +84,18 @@ const PlaceCard = ({offer, setActiveOffer, cardType}) => {
 
 PlaceCard.propTypes = {
   offer: offersPropTypes,
-  setActiveOffer: func.isRequired,
   cardType: string.isRequired,
+  updateActiveOffer: func.isRequired,
 };
 
-export default PlaceCard;
+const mapStateToProps = (state) => ({
+  activeOffer: state.activeOffer,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  updateActiveOffer(id) {
+    dispatch(ActionCreator.changeActiveOffer(id));
+  }
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(PlaceCard);

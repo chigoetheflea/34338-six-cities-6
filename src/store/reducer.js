@@ -1,11 +1,13 @@
 import {ActionType} from './actions';
-import {DEFAULT_CITY} from '../util/const';
-import {getFilteredOffersByCity} from '../util/util';
+import {DEFAULT_CITY, DEFAULT_SORTING} from '../util/const';
+import {getFilteredOffersByCity, getSortedOffers} from '../util/util';
 import offers from '../mocks/offers';
 
 const initialState = {
   city: DEFAULT_CITY,
+  sorting: DEFAULT_SORTING,
   offers: getFilteredOffersByCity(offers, DEFAULT_CITY),
+  activeOffer: null,
 };
 
 const reducer = (state = initialState, action) => {
@@ -21,7 +23,19 @@ const reducer = (state = initialState, action) => {
     case ActionType.GET_OFFERS:
       return {
         ...state,
-        offers: getFilteredOffersByCity(offers, state.city),
+        offers: getSortedOffers(getFilteredOffersByCity(offers, state.city), state.sorting),
+      };
+
+    case ActionType.CHANGE_SORTING:
+      return {
+        ...state,
+        sorting: payload,
+      };
+
+    case ActionType.CHANGE_ACTIVE_OFFER:
+      return {
+        ...state,
+        activeOffer: payload,
       };
   }
 

@@ -15,7 +15,7 @@ export default [
       },
       name: `Amsterdam`
     },
-    description: `A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.`,
+    description: `1. A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.`,
     goods: [`Heating`, `Kitchen`, `Cable TV`, `Washing machine`, `Coffee machine`, `Dishwasher`],
     host: {
       avatarUrl: `${IMG_URL}?r=${Math.random()}`,
@@ -35,7 +35,7 @@ export default [
     maxAdults: 4,
     previewImage: `${IMG_URL}?r=${Math.random()}`,
     price: getRandomInteger(MIN_PRICE, MAX_PRICE),
-    rating: 4.8,
+    rating: 4,
     title: `Beautiful & luxurious studio at great location`,
     type: `apartment`
   },
@@ -49,7 +49,7 @@ export default [
         zoom: 10,
       }
     },
-    description: `A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.`,
+    description: `2. A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.`,
     goods: [`Heating`, `Kitchen`, `Cable TV`, `Washing machine`, `Coffee machine`, `Dishwasher`],
     host: {
       avatarUrl: `${IMG_URL}?r=${Math.random()}`,
@@ -69,7 +69,7 @@ export default [
     maxAdults: 4,
     previewImage: `${IMG_URL}?r=${Math.random()}`,
     price: getRandomInteger(MIN_PRICE, MAX_PRICE),
-    rating: 4.2,
+    rating: 2.2,
     title: `Beautiful & luxurious studio at great location`,
     type: `apartment`
   },
@@ -83,7 +83,7 @@ export default [
       },
       name: `Amsterdam`
     },
-    description: `A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.`,
+    description: `3. A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.`,
     goods: [`Heating`, `Kitchen`, `Cable TV`, `Washing machine`, `Coffee machine`, `Dishwasher`],
     host: {
       avatarUrl: `${IMG_URL}?r=${Math.random()}`,
@@ -103,7 +103,7 @@ export default [
     maxAdults: 4,
     previewImage: `${IMG_URL}?r=${Math.random()}`,
     price: getRandomInteger(MIN_PRICE, MAX_PRICE),
-    rating: 2,
+    rating: 1,
     title: `Beautiful & luxurious studio at great location`,
     type: `apartment`
   },
@@ -117,7 +117,7 @@ export default [
       },
       name: `Amsterdam`
     },
-    description: `A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.`,
+    description: `4. A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.`,
     goods: [`Heating`, `Kitchen`, `Cable TV`, `Washing machine`, `Coffee machine`, `Dishwasher`],
     host: {
       avatarUrl: `${IMG_URL}?r=${Math.random()}`,

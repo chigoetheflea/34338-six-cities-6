@@ -1,11 +1,9 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {arrayOf, string} from 'prop-types';
 import PlaceCard from '../place-card/place-card';
 import offersPropTypes from '../../prop-types/offers';
 
 const OffersList = ({offers, cardType}) => {
-  const [, setActiveOffer] = useState(null);
-
   return (
     <>
       {
@@ -14,7 +12,6 @@ const OffersList = ({offers, cardType}) => {
             key={`${offer.id}`}
             offer={offer}
             cardType={cardType}
-            setActiveOffer={setActiveOffer}
           />
         )
       }

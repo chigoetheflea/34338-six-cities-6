@@ -1,6 +1,7 @@
-import {MONTHES} from './const';
+import {MONTHES, SortingType} from './const';
 
 const RATING_INCREMENT = 20;
+const SLUG_REPLACER = `-`;
 
 const getRandomInteger = (min, max) => {
   const randomInteger = min + Math.random() * (max - min + 1);
@@ -49,10 +50,49 @@ const getSortedReviews = (reviews) => {
 
 const getFilteredOffersByCity = (offers, currentCity) => offers.filter(({city: {name}}) => name === currentCity.name);
 
+const getSortedOffers = (offers, sortingType) => {
+  const offersForSorting = [...offers];
+
+  switch (sortingType) {
+    case SortingType.PRICE_INCREASE:
+      return offersForSorting.sort((prevOffer, nextOffer) => {
+        if (prevOffer.price === nextOffer.price) {
+          return 0;
+        }
+
+        return prevOffer.price < nextOffer.price ? -1 : 1;
+      });
+
+    case SortingType.PRICE_DECREASE:
+      return offersForSorting.sort((prevOffer, nextOffer) => {
+        if (prevOffer.price === nextOffer.price) {
+          return 0;
+        }
+
+        return prevOffer.price > nextOffer.price ? -1 : 1;
+      });
+
+    case SortingType.TOP_RATED:
+      return offersForSorting.sort((prevOffer, nextOffer) => {
+        if (prevOffer.rating === nextOffer.rating) {
+          return 0;
+        }
+
+        return prevOffer.rating > nextOffer.rating ? -1 : 1;
+      });
+  }
+
+  return offersForSorting;
+};
+
+const makeSlug = (source) => source.toLowerCase().replace(/\W+/g, SLUG_REPLACER);
+
 export {
   getRandomInteger,
   getFormattedDate,
   getFormattedRating,
   getSortedReviews,
   getFilteredOffersByCity,
+  getSortedOffers,
+  makeSlug,
 };
