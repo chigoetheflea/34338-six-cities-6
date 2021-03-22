@@ -22,7 +22,7 @@ const Sorting = ({currentSorting, updateSortingType}) => {
   };
 
   return (
-    <form className="places__sorting" action="#" method="get">
+    <div className="places__sorting">
       <span className="places__sorting-caption">Sort by</span>
       <span
         className="places__sorting-type"
@@ -51,7 +51,7 @@ const Sorting = ({currentSorting, updateSortingType}) => {
           })
         }
       </ul>
-    </form>
+    </div>
   );
 };
 
