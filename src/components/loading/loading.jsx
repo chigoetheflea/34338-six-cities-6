@@ -1,13 +1,9 @@
 import React from 'react';
+import {LoadingStyle} from './loading-style';
 
 const Loading = () => {
-  const loadingStyle = {
-    marginTop: `200px`,
-    textAlign: `center`,
-  };
-
   return (
-    <div className="loading" style={loadingStyle}>
+    <div className="loading" style={LoadingStyle}>
       <img src="img/spinner.gif" alt="Loading..." width="64" height="64"/>
     </div>
   );

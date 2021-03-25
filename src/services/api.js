@@ -8,7 +8,7 @@ export const createApi = (handleUserUnauthorized) => {
   const api = axios.create({
     baseURL: BASE_URL,
     timeout: TIMEOUT,
-    withCredentials: ``,
+    withCredentials: true,
   });
 
   const handleResponseSuccess = (response) => response;
