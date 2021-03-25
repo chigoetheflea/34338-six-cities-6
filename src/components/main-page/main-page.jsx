@@ -1,18 +1,32 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
-import {arrayOf} from 'prop-types';
+import {arrayOf, bool, func} from 'prop-types';
 
 import OffersList from '../offers-list/offers-list';
 import CitiesList from '../cities-list/cities-list';
 import Map from '../map/map';
 import Sorting from '../sorting/sorting';
+import Loading from '../loading/loading';
 import offersPropTypes from '../../prop-types/offers';
 import cityPropTypes from '../../prop-types/city';
 import {CITIES, PlaceCardType} from '../../util/const';
+import {fetchOffersList} from '../../store/api-actions';
 
-const MainPage = ({offers, city}) => {
+const MainPage = ({offers, city, isDataLoaded, loadOffers}) => {
   const currentCityLocations = offers.map(({id, title, location}) => ({id, title, ...location}));
   const {name, location} = city;
+
+  useEffect(() => {
+    if (!isDataLoaded) {
+      loadOffers();
+    }
+  }, [isDataLoaded]);
+
+  if (!isDataLoaded) {
+    return (
+      <Loading />
+    );
+  }
 
   return (
     <div className="page page--gray page--main">
@@ -72,12 +86,21 @@ const MainPage = ({offers, city}) => {
 MainPage.propTypes = {
   offers: arrayOf(offersPropTypes),
   city: cityPropTypes.isRequired,
+  isDataLoaded: bool.isRequired,
+  loadOffers: func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   city: state.city,
-  offers: state.offers,
+  offers: state.filteredOffers,
+  isDataLoaded: state.isDataLoaded,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  loadOffers() {
+    dispatch(fetchOffersList());
+  },
 });
 
 export {MainPage};
-export default connect(mapStateToProps)(MainPage);
+export default connect(mapStateToProps, mapDispatchToProps)(MainPage);
