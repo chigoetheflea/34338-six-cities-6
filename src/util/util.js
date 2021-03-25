@@ -1,3 +1,5 @@
+/* eslint-disable camelcase */
+
 import {MONTHES, SortingType} from './const';
 
 const RATING_INCREMENT = 20;
@@ -87,6 +89,36 @@ const getSortedOffers = (offers, sortingType) => {
 
 const makeSlug = (source) => source.toLowerCase().replace(/\W+/g, SLUG_REPLACER);
 
+const adaptOffersToClient = (offers) => {
+  const adaptedOffers = offers.map((offer) => {
+    const {is_favorite, is_premium, max_adults, preview_image, host: {is_pro, avatar_url}} = offer;
+
+    const adaptedOffer = {
+      ...offer,
+      isFavorite: is_favorite,
+      isPremium: is_premium,
+      maxAdults: max_adults,
+      previewImage: preview_image,
+      host: {
+        ...offer.host,
+        isPro: is_pro,
+        avatarUrl: avatar_url,
+      },
+    };
+
+    delete adaptedOffer.is_favorite;
+    delete adaptedOffer.is_premium;
+    delete adaptedOffer.max_adults;
+    delete adaptedOffer.preview_image;
+    delete adaptedOffer.host.is_pro;
+    delete adaptedOffer.host.avatar_url;
+
+    return adaptedOffer;
+  });
+
+  return adaptedOffers;
+};
+
 export {
   getRandomInteger,
   getFormattedDate,
@@ -95,4 +127,5 @@ export {
   getFilteredOffersByCity,
   getSortedOffers,
   makeSlug,
+  adaptOffersToClient,
 };

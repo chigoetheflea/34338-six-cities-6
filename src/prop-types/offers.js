@@ -10,7 +10,7 @@ export default shape({
   description: string.isRequired,
   goods: arrayOf(string).isRequired,
   host: shape({
-    avatarUrl: string.isRequired,
+    avatarUrl: string,
     id: number.isRequired,
     isPro: bool.isRequired,
     name: string.isRequired

@@ -1,4 +1,4 @@
-const ZOOM = 10;
+const ZOOM = 13;
 
 const CITIES = [
   {
@@ -12,8 +12,8 @@ const CITIES = [
   {
     name: `Cologne`,
     location: {
-      latitude: 47.010209,
-      longitude: 2.320878,
+      latitude: 50.938361,
+      longitude: 6.959974,
       zoom: ZOOM,
     },
   },
@@ -83,6 +83,15 @@ const SortingType = {
 
 const DEFAULT_SORTING = SortingType.POPULAR;
 
+const HttpCode = {
+  UNAUTHORIZED: 401,
+};
+
+const AuthorizationStatus = {
+  AUTH: `AUTH`,
+  NO_AUTH: `NO_AUTH`,
+};
+
 export {
   CITIES,
   MONTHES,
@@ -90,4 +99,6 @@ export {
   PlaceCardType,
   DEFAULT_SORTING,
   SortingType,
+  HttpCode,
+  AuthorizationStatus,
 };

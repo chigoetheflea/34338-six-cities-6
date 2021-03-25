@@ -1,5 +1,6 @@
 import React from 'react';
 import {arrayOf} from 'prop-types';
+import {connect} from 'react-redux';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 
 import MainPage from '../main-page/main-page';
@@ -7,7 +8,6 @@ import Login from '../login/login';
 import Favorites from '../favorites/favorites';
 import Offer from '../offer/offer';
 import PageNotFound from '../page-not-found/page-not-found';
-
 import {getSortedReviews} from '../../util/util';
 import offersPropTypes from '../../prop-types/offers';
 import reviewPropTypes from '../../prop-types/reviews';
@@ -47,4 +47,8 @@ App.propTypes = {
   reviews: arrayOf(reviewPropTypes),
 };
 
-export default App;
+const mapStateToProps = (state) => ({
+  offers: state.offers,
+});
+
+export default connect(mapStateToProps)(App);

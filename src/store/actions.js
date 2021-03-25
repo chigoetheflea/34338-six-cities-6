@@ -3,6 +3,9 @@ const ActionType = {
   GET_OFFERS: `city/getOffers`,
   CHANGE_SORTING: `sorting/change`,
   CHANGE_ACTIVE_OFFER: `offer/changeActive`,
+  REQUEST_AUTHORIZATION: `user/requestAuthorization`,
+  LOAD_OFFERS: `offers/load`,
+  ADAPT_OFFERS: `offers/adapt`,
 };
 
 const ActionCreator = {
@@ -20,6 +23,14 @@ const ActionCreator = {
   changeActiveOffer: (id) => ({
     type: ActionType.CHANGE_ACTIVE_OFFER,
     payload: id,
+  }),
+  requestAuthorization: (status) => ({
+    type: ActionType.REQUEST_AUTHORIZATION,
+    payload: status,
+  }),
+  loadOffers: (offers) => ({
+    type: ActionType.LOAD_OFFERS,
+    payload: offers,
   }),
 };
 
