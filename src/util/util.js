@@ -1,3 +1,5 @@
+/* eslint-disable camelcase */
+
 import {MONTHES, SortingType} from './const';
 
 const RATING_INCREMENT = 20;
@@ -115,7 +117,7 @@ const adaptOffersToClient = (offers) => {
   });
 
   return adaptedOffers;
-}
+};
 
 export {
   getRandomInteger,
