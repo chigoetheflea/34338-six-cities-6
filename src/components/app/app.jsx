@@ -1,23 +1,25 @@
 import React from 'react';
 import {arrayOf} from 'prop-types';
 import {connect} from 'react-redux';
-import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+import {Router, Route, Switch} from 'react-router-dom';
 
 import MainPage from '../main-page/main-page';
 import Login from '../login/login';
 import Favorites from '../favorites/favorites';
 import Offer from '../offer/offer';
 import PageNotFound from '../page-not-found/page-not-found';
+import PrivateRoute from '../private-route/private-route';
 import {getSortedReviews} from '../../util/util';
 import offersPropTypes from '../../prop-types/offers';
 import reviewPropTypes from '../../prop-types/reviews';
+import browserHistory from "../../services/browser-history";
 
 const App = ({offers, reviews}) => {
   const favoriteOffers = offers.filter(({isFavorite}) => isFavorite);
   const sortedReviews = getSortedReviews(reviews);
 
   return (
-    <Router>
+    <Router history={browserHistory}>
       <Switch>
         <Route exact path="/">
           <MainPage offers={offers} />
@@ -25,9 +27,13 @@ const App = ({offers, reviews}) => {
         <Route exact path="/login">
           <Login />
         </Route>
-        <Route exact path="/favorites">
-          <Favorites offers={favoriteOffers} />
-        </Route>
+        <PrivateRoute
+          exact
+          path="/favorites"
+          render={() => <Favorites
+            offers={favoriteOffers}
+          />}
+        />
         <Route exact path="/offer/:id">
           <Offer
             reviews={sortedReviews}

@@ -10,6 +10,7 @@ const initialState = {
   activeOffer: null,
   authorizationStatus: AuthorizationStatus.NO_AUTH,
   isDataLoaded: false,
+  loggedUser: null,
 };
 
 const reducer = (state = initialState, action) => {
@@ -51,6 +52,12 @@ const reducer = (state = initialState, action) => {
         ...state,
         offers: payload,
         isDataLoaded: true,
+      };
+
+    case ActionType.SAVE_AUTH_INFO:
+      return {
+        ...state,
+        loggedUser: payload,
       };
   }
 

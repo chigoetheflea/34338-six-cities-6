@@ -1,7 +1,7 @@
 import React from 'react';
 import {arrayOf} from 'prop-types';
 
-import InnerPageHeader from '../inner-page-header/inner-page-header';
+import Header from '../header/header';
 import ReviewForm from '../review-form/review-form';
 import ReviewsList from '../reviews-list/reviews-list';
 import Map from '../map/map';
@@ -21,7 +21,7 @@ const Offer = ({reviews, offers}) => {
 
   return (
     <div className="page">
-      <InnerPageHeader />
+      <Header />
 
       <main className="page__main page__main--property">
         <section className="property">

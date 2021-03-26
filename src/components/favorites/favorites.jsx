@@ -1,6 +1,6 @@
 import React from 'react';
 import {arrayOf} from 'prop-types';
-import InnerPageHeader from '../inner-page-header/inner-page-header';
+import Header from '../header/header';
 import FavoritesByCity from '../favorites-by-city/favorites-by-city';
 
 import offersPropTypes from '../../prop-types/offers';
@@ -9,7 +9,7 @@ import {CITIES} from '../../util/const';
 const Favorites = ({offers}) => {
   return (
     <div className="page">
-      <InnerPageHeader />
+      <Header />
 
       <main className="page__main page__main--favorites">
         <div className="page__favorites-container container">
