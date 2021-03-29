@@ -12,7 +12,7 @@ import PrivateRoute from '../private-route/private-route';
 import {getSortedReviews} from '../../util/util';
 import offersPropTypes from '../../prop-types/offers';
 import reviewPropTypes from '../../prop-types/reviews';
-import browserHistory from "../../services/browser-history";
+import browserHistory from '../../services/browser-history';
 
 const App = ({offers, reviews}) => {
   const favoriteOffers = offers.filter(({isFavorite}) => isFavorite);

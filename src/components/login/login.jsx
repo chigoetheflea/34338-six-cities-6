@@ -1,5 +1,4 @@
 import React, {useRef} from 'react';
-import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {func} from 'prop-types';
 
@@ -42,8 +41,6 @@ const Login = ({loginUser, updateCity}) => {
             <form
               onSubmit={handleUserLogin}
               className="login__form form"
-              action="#"
-              method="post"
             >
               <div className="login__input-wrapper form__input-wrapper">
                 <label className="visually-hidden">E-mail</label>
@@ -72,14 +69,12 @@ const Login = ({loginUser, updateCity}) => {
           </section>
           <section className="locations locations--login locations--current">
             <div className="locations__item">
-              <Link
+              <button
                 onClick={handleCityChange}
                 className="locations__item-link"
-                href="#"
-                to="/"
               >
                 <span>{name}</span>
-              </Link>
+              </button>
             </div>
           </section>
         </div>
@@ -100,6 +95,7 @@ const mapDispatchToProps = (dispatch) => ({
   updateCity(city) {
     dispatch(ActionCreator.changeCity(city));
     dispatch(ActionCreator.getOffers());
+    dispatch(ActionCreator.redirectToRoute(`/`));
   },
 });
 

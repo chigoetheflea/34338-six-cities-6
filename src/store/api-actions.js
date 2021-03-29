@@ -11,7 +11,6 @@ const checkAuthorization = () => (dispatch, _getState, api) => (
   api.get(`/login`)
     .then(({data}) => dispatch(ActionCreator.saveAuthInfo(data)))
     .then(() => dispatch(ActionCreator.requestAuthorization(AuthorizationStatus.AUTH)))
-    .catch(() => {})
 );
 
 const login = ({login: email, password}) => (dispatch, _getState, api) => (

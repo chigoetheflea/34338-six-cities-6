@@ -4,7 +4,6 @@ import {connect} from 'react-redux';
 import {bool, number, shape, string} from 'prop-types';
 
 import {AuthorizationStatus} from '../../util/const';
-import {signInStyle} from './sign-in-style';
 
 const Header = ({authorizationStatus, loggedUser, isFrontPage = false}) => {
   const getAuthorizationBlock = (userStatus) => {
@@ -21,25 +20,10 @@ const Header = ({authorizationStatus, loggedUser, isFrontPage = false}) => {
         </Link>
         : <Link
           to="/login"
-          className="header__sign-in"
-          style={signInStyle}
+          className="header__nav-link header__nav-link--profile"
         >
           {avatar}
-          <span className="header__login">Sign in</span>;
-        </Link>
-    );
-  };
-
-  const getHomeLinkBlock = () => {
-    const logo = <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41" />;
-
-    return (
-      isFrontPage
-        ? <a className="header__logo-link header__logo-link--active">
-          {logo}
-        </a>
-        : <Link className="header__logo-link" to="/">
-          {logo}
+          <span className="header__login">Sign in</span>
         </Link>
     );
   };
@@ -49,7 +33,13 @@ const Header = ({authorizationStatus, loggedUser, isFrontPage = false}) => {
       <div className="container">
         <div className="header__wrapper">
           <div className="header__left">
-            {getHomeLinkBlock()}
+            <Link
+              className="header__logo-link"
+              style={{pointerEvents: isFrontPage ? `none` : `auto`}}
+              to="/"
+            >
+              <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41" />
+            </Link>
           </div>
           <nav className="header__nav">
             <ul className="header__nav-list">
