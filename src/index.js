@@ -9,9 +9,11 @@ import App from './components/app/app';
 import {reducer} from './store/reducer';
 import {createApi} from './services/api';
 import {ActionCreator} from './store/actions';
-import {fetchOffersList} from './store/api-actions';
+import {checkAuthorization, fetchOffersList} from './store/api-actions';
 import {AuthorizationStatus} from './util/const';
 import {getAdaptedOffers} from './store/middlewares/offers';
+import {getAdaptedUserInfo} from './store/middlewares/user';
+import {redirect} from './store/middlewares/rediret';
 import reviews from './mocks/reviews';
 
 const api = createApi(() => store.dispatch(ActionCreator.requestAuthorization(AuthorizationStatus.NO_AUTH)));
@@ -20,10 +22,13 @@ const store = createStore(
     reducer,
     composeWithDevTools(
         applyMiddleware(thunk.withExtraArgument(api)),
-        applyMiddleware(getAdaptedOffers)
+        applyMiddleware(getAdaptedOffers),
+        applyMiddleware(getAdaptedUserInfo),
+        applyMiddleware(redirect)
     )
 );
 
+store.dispatch(checkAuthorization());
 store.dispatch(fetchOffersList());
 
 ReactDOM.render(

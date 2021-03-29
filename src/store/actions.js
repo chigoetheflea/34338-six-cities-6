@@ -6,6 +6,8 @@ const ActionType = {
   REQUEST_AUTHORIZATION: `user/requestAuthorization`,
   LOAD_OFFERS: `offers/load`,
   ADAPT_OFFERS: `offers/adapt`,
+  SAVE_AUTH_INFO: `user/login`,
+  REDIRECT_TO_ROUTE: `app/redirect`,
 };
 
 const ActionCreator = {
@@ -31,6 +33,14 @@ const ActionCreator = {
   loadOffers: (offers) => ({
     type: ActionType.LOAD_OFFERS,
     payload: offers,
+  }),
+  saveAuthInfo: (info) => ({
+    type: ActionType.SAVE_AUTH_INFO,
+    payload: info,
+  }),
+  redirectToRoute: (url) => ({
+    type: ActionType.REDIRECT_TO_ROUTE,
+    payload: url,
   }),
 };
 

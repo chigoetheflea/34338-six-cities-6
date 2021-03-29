@@ -87,6 +87,8 @@ const getSortedOffers = (offers, sortingType) => {
   return offersForSorting;
 };
 
+const getRandomArrayElement = (source) => source[getRandomInteger(0, source.length)];
+
 const makeSlug = (source) => source.toLowerCase().replace(/\W+/g, SLUG_REPLACER);
 
 const adaptOffersToClient = (offers) => {
@@ -119,6 +121,21 @@ const adaptOffersToClient = (offers) => {
   return adaptedOffers;
 };
 
+const adaptUserToClient = (user) => {
+  const {avatar_url, is_pro} = user;
+
+  const adaptedUserInfo = {
+    ...user,
+    avatarUrl: avatar_url,
+    isPro: is_pro,
+  };
+
+  delete adaptedUserInfo.avatar_url;
+  delete adaptedUserInfo.is_pro;
+
+  return adaptedUserInfo;
+};
+
 export {
   getRandomInteger,
   getFormattedDate,
@@ -126,6 +143,8 @@ export {
   getSortedReviews,
   getFilteredOffersByCity,
   getSortedOffers,
+  getRandomArrayElement,
   makeSlug,
   adaptOffersToClient,
+  adaptUserToClient,
 };
