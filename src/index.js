@@ -13,6 +13,7 @@ import {checkAuthorization, fetchOffersList} from './store/api-actions';
 import {AuthorizationStatus} from './util/const';
 import {getAdaptedOffers} from './store/middlewares/offers';
 import {getAdaptedUserInfo} from './store/middlewares/user';
+import {getAdaptedReviews} from './store/middlewares/reviews';
 import {redirect} from './store/middlewares/rediret';
 import reviews from './mocks/reviews';
 
@@ -24,7 +25,8 @@ const store = createStore(
         applyMiddleware(thunk.withExtraArgument(api)),
         applyMiddleware(getAdaptedOffers),
         applyMiddleware(getAdaptedUserInfo),
-        applyMiddleware(redirect)
+        applyMiddleware(redirect),
+        applyMiddleware(getAdaptedReviews)
     )
 );
 

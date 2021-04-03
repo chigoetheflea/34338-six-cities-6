@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 
-import {MONTHES, SortingType} from './const';
+import {MONTHES, SortingType, ReviewSettings} from './const';
 
 const RATING_INCREMENT = 20;
 const SLUG_REPLACER = `-`;
@@ -89,34 +89,52 @@ const getSortedOffers = (offers, sortingType) => {
 
 const getRandomArrayElement = (source) => source[getRandomInteger(0, source.length)];
 
+const shuffleArray = (source) => {
+  for (let i = source.length - 1; i > 0; i--) {
+    let j = Math.floor(Math.random() * (i + 1));
+    [source[i], source[j]] = [source[j], source[i]];
+  }
+
+  return source;
+};
+
+const getRandomArrayElements = (source, count) => {
+  const additionalSource = [...source];
+  const shuffledSource = shuffleArray(additionalSource);
+
+  return shuffledSource.slice(0, count);
+};
+
 const makeSlug = (source) => source.toLowerCase().replace(/\W+/g, SLUG_REPLACER);
 
+const adaptOfferToClient = (offer) => {
+  const {is_favorite, is_premium, max_adults, preview_image, host: {is_pro, avatar_url}} = offer;
+
+  const adaptedOffer = {
+    ...offer,
+    isFavorite: is_favorite,
+    isPremium: is_premium,
+    maxAdults: max_adults,
+    previewImage: preview_image,
+    host: {
+      ...offer.host,
+      isPro: is_pro,
+      avatarUrl: avatar_url,
+    },
+  };
+
+  delete adaptedOffer.is_favorite;
+  delete adaptedOffer.is_premium;
+  delete adaptedOffer.max_adults;
+  delete adaptedOffer.preview_image;
+  delete adaptedOffer.host.is_pro;
+  delete adaptedOffer.host.avatar_url;
+
+  return adaptedOffer;
+};
+
 const adaptOffersToClient = (offers) => {
-  const adaptedOffers = offers.map((offer) => {
-    const {is_favorite, is_premium, max_adults, preview_image, host: {is_pro, avatar_url}} = offer;
-
-    const adaptedOffer = {
-      ...offer,
-      isFavorite: is_favorite,
-      isPremium: is_premium,
-      maxAdults: max_adults,
-      previewImage: preview_image,
-      host: {
-        ...offer.host,
-        isPro: is_pro,
-        avatarUrl: avatar_url,
-      },
-    };
-
-    delete adaptedOffer.is_favorite;
-    delete adaptedOffer.is_premium;
-    delete adaptedOffer.max_adults;
-    delete adaptedOffer.preview_image;
-    delete adaptedOffer.host.is_pro;
-    delete adaptedOffer.host.avatar_url;
-
-    return adaptedOffer;
-  });
+  const adaptedOffers = offers.map((offer) => adaptOfferToClient(offer));
 
   return adaptedOffers;
 };
@@ -136,6 +154,38 @@ const adaptUserToClient = (user) => {
   return adaptedUserInfo;
 };
 
+const adaptReviewToClient = (review) => {
+  const user = adaptUserToClient(review.user);
+
+  return {
+    ...review,
+    user
+  };
+};
+
+const adaptReviewsToClient = (reviews) => {
+  const adaptedReviews = reviews.map((review) => adaptReviewToClient(review));
+
+  return adaptedReviews;
+};
+
+const getReviewValidityMessage = (value) => {
+  const {length} = value;
+  const isTextTooShort = length < ReviewSettings.MIN_LENGTH;
+  const isTextEndsSoon = length > ReviewSettings.MAX_THRESHOLD && length < ReviewSettings.MAX_LENGTH;
+  const charsLeft = ReviewSettings.MAX_LENGTH - length;
+
+  if (isTextTooShort) {
+    return `Your review is too short`;
+  }
+
+  if (isTextEndsSoon) {
+    return `You have ${charsLeft} more characters left`;
+  }
+
+  return ``;
+};
+
 export {
   getRandomInteger,
   getFormattedDate,
@@ -146,5 +196,9 @@ export {
   getRandomArrayElement,
   makeSlug,
   adaptOffersToClient,
+  adaptOfferToClient,
   adaptUserToClient,
+  getRandomArrayElements,
+  adaptReviewsToClient,
+  getReviewValidityMessage,
 };

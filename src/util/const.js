@@ -68,6 +68,13 @@ const MONTHES = [
   `December`,
 ];
 
+const PlaceType = {
+  APARTMENT: `Apartment`,
+  ROOM: `Private Room`,
+  HOUSE: `House`,
+  HOTEL: `Hotel`,
+};
+
 const PlaceCardType = {
   BASIC: `BASIC`,
   FAVORITE: `FAVORITE`,
@@ -92,6 +99,17 @@ const AuthorizationStatus = {
   NO_AUTH: `NO_AUTH`,
 };
 
+const ReviewSettings = {
+  MAX_LENGTH: 300,
+  MAX_THRESHOLD: 280,
+  MIN_LENGTH: 50,
+};
+
+const ReviewFormStatus = {
+  SEND: `send`,
+  ERROR: `error`,
+};
+
 export {
   CITIES,
   MONTHES,
@@ -101,4 +119,7 @@ export {
   SortingType,
   HttpCode,
   AuthorizationStatus,
+  PlaceType,
+  ReviewSettings,
+  ReviewFormStatus,
 };
