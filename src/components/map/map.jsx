@@ -22,7 +22,7 @@ const LeafletMap = {
   HEIGHT: `100%`,
 };
 
-const Map = ({city, points, activeOffer}) => {
+const Map = ({city, points, hoveredOffer}) => {
   const mapRef = useRef();
   const {latitude, longitude, zoom} = city;
 
@@ -49,7 +49,7 @@ const Map = ({city, points, activeOffer}) => {
         lng,
       },
       {
-        icon: id === activeOffer ? iconActive : icon,
+        icon: id === hoveredOffer ? iconActive : icon,
       })
       .addTo(mapRef.current)
       .bindPopup(point.title);
@@ -58,7 +58,7 @@ const Map = ({city, points, activeOffer}) => {
     return () => {
       mapRef.current.remove();
     };
-  }, [points, activeOffer]);
+  }, [points, hoveredOffer]);
 
   return (
     <div
@@ -75,11 +75,12 @@ Map.propTypes = {
     title: string.isRequired,
     ...locationPropTypes,
   })).isRequired,
-  activeOffer: number,
+  hoveredOffer: number,
 };
 
 const mapStateToProps = (state) => ({
-  activeOffer: state.activeOffer,
+  hoveredOffer: state.hoveredOffer,
+  isRelatedLoaded: state.isRelatedLoaded,
 });
 
 export {Map};
