@@ -5,11 +5,12 @@ import {func, number, string} from 'prop-types';
 import {postReview} from '../../store/api-actions';
 import {getReviewValidityMessage} from '../../util/util';
 import {ReviewSettings, ReviewFormStatus} from '../../util/const';
-import {ActionCreator} from '../../store/actions';
+import {clearReviewFormStatus} from '../../store/actions';
+import {getReviewsFormStatus} from '../../store/reviews/selectors';
 
 const ERROR_MESSAGE = `Sending error. Try again`;
 
-const ReviewForm = ({sendReview, activeOffer, formStatus, clearStatus}) => {
+const ReviewForm = ({sendReview, activeOffer, reviewFormStatus, clearStatus}) => {
   const formRef = useRef();
   const reviewRef = useRef();
 
@@ -32,11 +33,11 @@ const ReviewForm = ({sendReview, activeOffer, formStatus, clearStatus}) => {
   };
 
   useEffect(() => {
-    if (formStatus === ReviewFormStatus.SEND) {
+    if (reviewFormStatus === ReviewFormStatus.SEND) {
       clearForm();
     }
 
-    if (formStatus === ReviewFormStatus.ERROR) {
+    if (reviewFormStatus === ReviewFormStatus.ERROR) {
       setReviewForm({
         ...reviewForm,
         isError: true,
@@ -47,7 +48,7 @@ const ReviewForm = ({sendReview, activeOffer, formStatus, clearStatus}) => {
     return () => {
       clearStatus();
     };
-  }, [formStatus]);
+  }, [reviewFormStatus]);
 
   const handleFormSubmit = (evt) => {
     evt.preventDefault();
@@ -190,6 +191,7 @@ const ReviewForm = ({sendReview, activeOffer, formStatus, clearStatus}) => {
         </p>
         <button className="reviews__submit form__submit button" type="submit" disabled={reviewForm.isDisabled ? `disabled` : ``}>Submit</button>
       </div>
+
       {reviewForm.isError && <p>{ERROR_MESSAGE}</p>}
     </form>
   );
@@ -198,12 +200,12 @@ const ReviewForm = ({sendReview, activeOffer, formStatus, clearStatus}) => {
 ReviewForm.propTypes = {
   activeOffer: number.isRequired,
   sendReview: func.isRequired,
-  formStatus: string,
+  reviewFormStatus: string,
   clearStatus: func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  formStatus: state.reviewFormStatus,
+  reviewFormStatus: getReviewsFormStatus(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -211,7 +213,7 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(postReview(data));
   },
   clearStatus() {
-    dispatch(ActionCreator.clearReviewFormStatus());
+    dispatch(clearReviewFormStatus());
   },
 });
 

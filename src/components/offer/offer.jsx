@@ -13,7 +13,9 @@ import offersPropTypes from '../../prop-types/offers';
 import {PlaceType, AuthorizationStatus} from '../../util/const';
 import {getFormattedRating, getRandomArrayElements} from '../../util/util';
 import {fetchOffer, manageFavorite} from '../../store/api-actions';
-import {ActionCreator} from '../../store/actions';
+import {clearLoadedOffer, redirectToRoute} from '../../store/actions';
+import {getLoadedOffer, getOfferLoadingStatus, getActiveOffer, getRelatedOffers, getRelatedLoadingStatus} from '../../store/offer/selectors';
+import {getAuthorizationStatus} from '../../store/user/selectors';
 
 const MAX_PHOTO_COUNT = 6;
 
@@ -23,7 +25,7 @@ const Offer = ({
   activeOffer,
   loadedOffer,
   loadOffer,
-  clearLoadedOffer,
+  clearOffer,
   relatedOffers,
   authorizationStatus,
   manageFavoriteStatus,
@@ -45,7 +47,7 @@ const Offer = ({
   }, [isOfferLoaded, isRelatedLoaded]);
 
   useEffect(() => () => {
-    clearLoadedOffer();
+    clearOffer();
   }, []);
 
   if (!isOfferLoaded) {
@@ -167,7 +169,6 @@ const Offer = ({
 
 Offer.propTypes = {
   reviews: arrayOf(reviewPropTypes),
-  offers: arrayOf(offersPropTypes),
   relatedOffers: arrayOf(offersPropTypes),
   loadedOffer: offersPropTypes,
   activeOffer: number,
@@ -175,32 +176,32 @@ Offer.propTypes = {
   isOfferLoaded: bool.isRequired,
   isRelatedLoaded: bool.isRequired,
   loadOffer: func.isRequired,
-  clearLoadedOffer: func.isRequired,
+  clearOffer: func.isRequired,
   manageFavoriteStatus: func.isRequired,
   goToLogin: func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  loadedOffer: state.loadedOffer,
-  isOfferLoaded: state.isOfferLoaded,
-  activeOffer: state.activeOffer,
-  authorizationStatus: state.authorizationStatus,
-  relatedOffers: state.relatedOffers,
-  isRelatedLoaded: state.isRelatedLoaded,
+  loadedOffer: getLoadedOffer(state),
+  isOfferLoaded: getOfferLoadingStatus(state),
+  activeOffer: getActiveOffer(state),
+  authorizationStatus: getAuthorizationStatus(state),
+  relatedOffers: getRelatedOffers(state),
+  isRelatedLoaded: getRelatedLoadingStatus(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
   loadOffer(id) {
     dispatch(fetchOffer(id));
   },
-  clearLoadedOffer() {
-    dispatch(ActionCreator.clearLoadedOffer());
+  clearOffer() {
+    dispatch(clearLoadedOffer());
   },
   manageFavoriteStatus(id, status) {
     dispatch(manageFavorite(id, status));
   },
   goToLogin() {
-    dispatch(ActionCreator.redirectToRoute(`/login`));
+    dispatch(redirectToRoute(`/login`));
   },
 });
 

@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import {func} from 'prop-types';
 
 import Header from '../header/header';
-import {ActionCreator} from '../../store/actions';
+import {changeCity, getOffers, redirectToRoute} from '../../store/actions';
 import {login} from '../../store/api-actions';
 import {CITIES} from '../../util/const';
 import {getRandomArrayElement} from '../../util/util';
@@ -93,9 +93,9 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(login(data));
   },
   updateCity(city) {
-    dispatch(ActionCreator.changeCity(city));
-    dispatch(ActionCreator.getOffers());
-    dispatch(ActionCreator.redirectToRoute(`/`));
+    dispatch(changeCity(city));
+    dispatch(getOffers());
+    dispatch(redirectToRoute(`/`));
   },
 });
 

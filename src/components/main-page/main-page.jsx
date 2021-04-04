@@ -1,26 +1,34 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {connect} from 'react-redux';
 import {arrayOf, bool, func} from 'prop-types';
 
-import OffersList from '../offers-list/offers-list';
 import CitiesList from '../cities-list/cities-list';
-import Map from '../map/map';
-import Sorting from '../sorting/sorting';
+import MainPageEmpty from './main-page-empty';
+import MainPageFull from './main-page-full';
 import Loading from '../loading/loading';
 import Header from '../header/header';
 import offersPropTypes from '../../prop-types/offers';
 import cityPropTypes from '../../prop-types/city';
-import {CITIES, PlaceCardType} from '../../util/const';
+import {CITIES} from '../../util/const';
 import {fetchOffersList} from '../../store/api-actions';
+import {getCity, getDataLoadingStatus, getFilteredOffers} from '../../store/offers/selectors';
 
 const MainPage = ({offers, city, isDataLoaded, loadOffers}) => {
-  const currentCityLocations = offers.map(({id, title, location}) => ({id, title, ...location}));
-  const {name, location} = city;
+  const [mainPage, setMainPage] = useState({
+    isListEmpty: true,
+  });
 
   useEffect(() => {
     if (!isDataLoaded) {
       loadOffers();
     }
+
+    if (offers.length) {
+      setMainPage({
+        isListEmpty: false,
+      });
+    }
+
   }, [isDataLoaded]);
 
   if (!isDataLoaded) {
@@ -30,35 +38,13 @@ const MainPage = ({offers, city, isDataLoaded, loadOffers}) => {
   }
 
   return (
-    <div className="page page--gray page--main">
+    <div className={`page page--gray page--main ${mainPage.isListEmpty ? `page__main--index-empty` : ``}`}>
       <Header isFrontPage />
 
       <main className="page__main page__main--index">
         <h1 className="visually-hidden">Cities</h1>
         <CitiesList cities={CITIES}/>
-        <div className="cities">
-          <div className="cities__places-container container">
-            <section className="cities__places places">
-              <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{offers.length} places to stay in {name}</b>
-              <Sorting />
-              <div className="cities__places-list places__list tabs__content">
-                <OffersList
-                  offers={offers}
-                  cardType={PlaceCardType.BASIC}
-                />
-              </div>
-            </section>
-            <div className="cities__right-section">
-              <section className="cities__map map">
-                <Map
-                  city={location}
-                  points={currentCityLocations}
-                />
-              </section>
-            </div>
-          </div>
-        </div>
+        {mainPage.isListEmpty ? <MainPageEmpty /> : <MainPageFull city={city} offers={offers} />}
       </main>
     </div>
   );
@@ -72,9 +58,9 @@ MainPage.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  city: state.city,
-  offers: state.filteredOffers,
-  isDataLoaded: state.isDataLoaded,
+  city: getCity(state),
+  offers: getFilteredOffers(state),
+  isDataLoaded: getDataLoadingStatus(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({

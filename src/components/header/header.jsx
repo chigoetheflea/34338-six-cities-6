@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import {bool, number, shape, string} from 'prop-types';
 
 import {AuthorizationStatus} from '../../util/const';
+import {getAuthorizationStatus, getLoggedUser} from '../../store/user/selectors';
 
 const Header = ({authorizationStatus, loggedUser, isFrontPage = false}) => {
   const getAuthorizationBlock = (userStatus) => {
@@ -67,8 +68,8 @@ Header.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  loggedUser: state.loggedUser,
-  authorizationStatus: state.authorizationStatus,
+  loggedUser: getLoggedUser(state),
+  authorizationStatus: getAuthorizationStatus(state),
 });
 
 export default connect(mapStateToProps)(Header);
