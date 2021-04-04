@@ -5,8 +5,9 @@ import {func, string} from 'prop-types';
 import {ActionCreator} from '../../store/actions';
 import offersPropTypes from '../../prop-types/offers';
 import {getFormattedRating} from '../../util/util';
-import {PlaceType, PlaceCardType} from '../../util/const';
+import {PlaceType, PlaceCardType, AuthorizationStatus} from '../../util/const';
 import {manageFavorite, fetchOffersList, fetchRelatedOffers} from '../../store/api-actions';
+import {imageButtonStyle, titleButtonStyle} from './place-card-style';
 
 const getCardClass = (cardType) => {
   switch (cardType) {
@@ -32,7 +33,7 @@ const getCardClass = (cardType) => {
   };
 };
 
-const PlaceCard = ({offer, cardType, updateHoveredOffer, updateActiveOffer, manageFavoriteStatus}) => {
+const PlaceCard = ({offer, cardType, updateHoveredOffer, updateActiveOffer, manageFavoriteStatus, authorizationStatus, goToLogin}) => {
   const {previewImage, isPremium, price, title, type, isFavorite, rating, id} = offer;
   const cardClasses = getCardClass(cardType);
 
@@ -44,15 +45,13 @@ const PlaceCard = ({offer, cardType, updateHoveredOffer, updateActiveOffer, mana
     updateHoveredOffer(null);
   };
 
-  const handleOfferClick = (evt) => {
-    evt.preventDefault();
-
+  const handleOfferClick = () => {
     updateActiveOffer(id);
   };
 
-  const handleFavoriteClick = () => {
-    manageFavoriteStatus(id, !isFavorite, cardType);
-  };
+  const handleFavoriteClick = () => authorizationStatus === AuthorizationStatus.AUTH
+    ? manageFavoriteStatus(id, !isFavorite, cardType)
+    : goToLogin();
 
   return (
     <article
@@ -62,9 +61,12 @@ const PlaceCard = ({offer, cardType, updateHoveredOffer, updateActiveOffer, mana
     >
       {isPremium && <div className="place-card__mark"><span>Premium</span></div>}
       <div className={`${cardClasses.image} place-card__image-wrapper`}>
-        <a href="" onClick={handleOfferClick}>
+        <button
+          onClick={handleOfferClick}
+          style={imageButtonStyle}
+        >
           <img className="place-card__image" src={previewImage} width="260" height="200" alt={title} />
-        </a>
+        </button>
       </div>
       <div className={`${cardClasses.info} place-card__info`}>
         <div className="place-card__price-wrapper">
@@ -90,9 +92,12 @@ const PlaceCard = ({offer, cardType, updateHoveredOffer, updateActiveOffer, mana
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href="" onClick={handleOfferClick}>
+          <button
+            onClick={handleOfferClick}
+            style={titleButtonStyle}
+          >
             {title}
-          </a>
+          </button>
         </h2>
         <p className="place-card__type">{PlaceType[type.toUpperCase()]}</p>
       </div>
@@ -103,13 +108,16 @@ const PlaceCard = ({offer, cardType, updateHoveredOffer, updateActiveOffer, mana
 PlaceCard.propTypes = {
   offer: offersPropTypes,
   cardType: string.isRequired,
+  authorizationStatus: string.isRequired,
   updateHoveredOffer: func.isRequired,
   updateActiveOffer: func.isRequired,
   manageFavoriteStatus: func.isRequired,
+  goToLogin: func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   hoveredOffer: state.hoveredOffer,
+  authorizationStatus: state.authorizationStatus,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -122,13 +130,13 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(ActionCreator.redirectToRoute(`/offer/${id}`));
   },
   manageFavoriteStatus(id, status, cardType) {
-    dispatch(manageFavorite(id, status));
+    const offers = cardType === PlaceCardType.RELATED ? fetchRelatedOffers(id) : fetchOffersList();
 
-    if (cardType === PlaceCardType.RELATED) {
-      dispatch(fetchRelatedOffers(id));
-    } else {
-      dispatch(fetchOffersList());
-    }
+    dispatch(manageFavorite(id, status));
+    dispatch(offers);
+  },
+  goToLogin() {
+    dispatch(ActionCreator.redirectToRoute(`/login`));
   },
 });
 

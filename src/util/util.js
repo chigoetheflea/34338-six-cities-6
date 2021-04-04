@@ -159,7 +159,7 @@ const adaptReviewToClient = (review) => {
 
   return {
     ...review,
-    user
+    user,
   };
 };
 

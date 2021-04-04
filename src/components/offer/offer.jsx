@@ -168,17 +168,16 @@ const Offer = ({
 Offer.propTypes = {
   reviews: arrayOf(reviewPropTypes),
   offers: arrayOf(offersPropTypes),
+  relatedOffers: arrayOf(offersPropTypes),
   loadedOffer: offersPropTypes,
   activeOffer: number,
+  authorizationStatus: string.isRequired,
   isOfferLoaded: bool.isRequired,
   isRelatedLoaded: bool.isRequired,
   loadOffer: func.isRequired,
   clearLoadedOffer: func.isRequired,
-  relatedOffers: arrayOf(offersPropTypes),
-  authorizationStatus: string.isRequired,
   manageFavoriteStatus: func.isRequired,
   goToLogin: func.isRequired,
-
 };
 
 const mapStateToProps = (state) => ({
