@@ -4,7 +4,7 @@ import {adaptOffersToClient, adaptOfferToClient, getRandomArrayElements} from '.
 const MAX_RELATED_COUNT = 3;
 
 export const getAdaptedOffers = () => (next) => (action) => {
-  const isOffersLoadingAction = action.type === ActionType.LOAD_OFFERS || action.type === ActionType.LOAD_RELATED_OFFERS;
+  const isOffersLoadingAction = action.type === ActionType.LOAD_OFFERS || action.type === ActionType.LOAD_RELATED_OFFERS || action.type === ActionType.LOAD_FAVORITES;
 
   if (isOffersLoadingAction) {
     action.payload = adaptOffersToClient(action.payload);

@@ -5,6 +5,7 @@ import {arrayOf, number, shape, string} from 'prop-types';
 import locationPropTypes from '../../prop-types/location';
 
 import 'leaflet/dist/leaflet.css';
+import {getHoveredOffer, getRelatedLoadingStatus} from '../../store/offer/selectors';
 
 const icon = leaflet.icon({
   iconUrl: `img/pin.svg`,
@@ -79,8 +80,8 @@ Map.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  hoveredOffer: state.hoveredOffer,
-  isRelatedLoaded: state.isRelatedLoaded,
+  hoveredOffer: getHoveredOffer(state),
+  isRelatedLoaded: getRelatedLoadingStatus(state),
 });
 
 export {Map};

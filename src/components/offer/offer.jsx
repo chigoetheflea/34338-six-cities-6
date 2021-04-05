@@ -1,6 +1,7 @@
 import React, {useEffect} from 'react';
 import {arrayOf, bool, func, number, string} from 'prop-types';
 import {connect} from 'react-redux';
+import browserHistory from '../../services/browser-history';
 
 import Header from '../header/header';
 import ReviewForm from '../review-form/review-form';
@@ -10,10 +11,12 @@ import Loading from '../loading/loading';
 import Related from '../related/related';
 import reviewPropTypes from '../../prop-types/reviews';
 import offersPropTypes from '../../prop-types/offers';
-import {PlaceType, AuthorizationStatus} from '../../util/const';
+import {PlaceType, AuthorizationStatus, Path} from '../../util/const';
 import {getFormattedRating, getRandomArrayElements} from '../../util/util';
 import {fetchOffer, manageFavorite} from '../../store/api-actions';
-import {ActionCreator} from '../../store/actions';
+import {clearLoadedOffer} from '../../store/actions';
+import {getLoadedOffer, getOfferLoadingStatus, getActiveOffer, getRelatedOffers, getRelatedLoadingStatus} from '../../store/offer/selectors';
+import {getAuthorizationStatus} from '../../store/user/selectors';
 
 const MAX_PHOTO_COUNT = 6;
 
@@ -23,11 +26,10 @@ const Offer = ({
   activeOffer,
   loadedOffer,
   loadOffer,
-  clearLoadedOffer,
+  clearOffer,
   relatedOffers,
   authorizationStatus,
   manageFavoriteStatus,
-  goToLogin
 }) => {
   let neighbourhoodLocations = [];
 
@@ -45,7 +47,7 @@ const Offer = ({
   }, [isOfferLoaded, isRelatedLoaded]);
 
   useEffect(() => () => {
-    clearLoadedOffer();
+    clearOffer();
   }, []);
 
   if (!isOfferLoaded) {
@@ -56,7 +58,7 @@ const Offer = ({
 
   const handleFavoriteClick = () => authorizationStatus === AuthorizationStatus.AUTH
     ? manageFavoriteStatus(activeOffer, !loadedOffer.isFavorite)
-    : goToLogin();
+    : browserHistory.push(Path.LOGIN);
 
   return (
     <div className="page">
@@ -167,7 +169,6 @@ const Offer = ({
 
 Offer.propTypes = {
   reviews: arrayOf(reviewPropTypes),
-  offers: arrayOf(offersPropTypes),
   relatedOffers: arrayOf(offersPropTypes),
   loadedOffer: offersPropTypes,
   activeOffer: number,
@@ -175,32 +176,28 @@ Offer.propTypes = {
   isOfferLoaded: bool.isRequired,
   isRelatedLoaded: bool.isRequired,
   loadOffer: func.isRequired,
-  clearLoadedOffer: func.isRequired,
+  clearOffer: func.isRequired,
   manageFavoriteStatus: func.isRequired,
-  goToLogin: func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  loadedOffer: state.loadedOffer,
-  isOfferLoaded: state.isOfferLoaded,
-  activeOffer: state.activeOffer,
-  authorizationStatus: state.authorizationStatus,
-  relatedOffers: state.relatedOffers,
-  isRelatedLoaded: state.isRelatedLoaded,
+  loadedOffer: getLoadedOffer(state),
+  isOfferLoaded: getOfferLoadingStatus(state),
+  activeOffer: getActiveOffer(state),
+  authorizationStatus: getAuthorizationStatus(state),
+  relatedOffers: getRelatedOffers(state),
+  isRelatedLoaded: getRelatedLoadingStatus(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
   loadOffer(id) {
     dispatch(fetchOffer(id));
   },
-  clearLoadedOffer() {
-    dispatch(ActionCreator.clearLoadedOffer());
+  clearOffer() {
+    dispatch(clearLoadedOffer());
   },
   manageFavoriteStatus(id, status) {
     dispatch(manageFavorite(id, status));
-  },
-  goToLogin() {
-    dispatch(ActionCreator.redirectToRoute(`/login`));
   },
 });
 

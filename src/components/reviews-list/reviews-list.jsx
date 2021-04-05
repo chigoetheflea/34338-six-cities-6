@@ -5,6 +5,7 @@ import {connect} from 'react-redux';
 import Review from '../review/review';
 import {fetchReviews} from '../../store/api-actions';
 import reviewPropTypes from '../../prop-types/reviews';
+import {getReviews, getReviewsLoadingStatus} from '../../store/reviews/selectors';
 
 const ReviewsList = ({activeOffer, reviews, isReviewsLoaded, loadReviews}) => {
   useEffect(() => {
@@ -31,8 +32,8 @@ ReviewsList.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  reviews: state.reviews,
-  isReviewsLoaded: state.isReviewsLoaded,
+  reviews: getReviews(state),
+  isReviewsLoaded: getReviewsLoadingStatus(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({

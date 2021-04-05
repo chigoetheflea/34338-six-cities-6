@@ -1,11 +1,12 @@
 import React, {useRef} from 'react';
 import {connect} from 'react-redux';
 import {func} from 'prop-types';
+import browserHistory from '../../services/browser-history';
 
 import Header from '../header/header';
-import {ActionCreator} from '../../store/actions';
+import {changeCity, getOffers} from '../../store/actions';
 import {login} from '../../store/api-actions';
-import {CITIES} from '../../util/const';
+import {CITIES, Path} from '../../util/const';
 import {getRandomArrayElement} from '../../util/util';
 
 const Login = ({loginUser, updateCity}) => {
@@ -93,9 +94,10 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(login(data));
   },
   updateCity(city) {
-    dispatch(ActionCreator.changeCity(city));
-    dispatch(ActionCreator.getOffers());
-    dispatch(ActionCreator.redirectToRoute(`/`));
+    dispatch(changeCity(city));
+    dispatch(getOffers());
+
+    browserHistory.push(Path.HOME);
   },
 });
 

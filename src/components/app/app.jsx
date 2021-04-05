@@ -9,36 +9,28 @@ import Favorites from '../favorites/favorites';
 import Offer from '../offer/offer';
 import PageNotFound from '../page-not-found/page-not-found';
 import PrivateRoute from '../private-route/private-route';
-import {getSortedReviews} from '../../util/util';
 import offersPropTypes from '../../prop-types/offers';
-import reviewPropTypes from '../../prop-types/reviews';
 import browserHistory from '../../services/browser-history';
+import {getOffers} from '../../store/offers/selectors';
+import {Path} from '../../util/const';
 
-const App = ({offers, reviews}) => {
-  const favoriteOffers = offers.filter(({isFavorite}) => isFavorite);
-  const sortedReviews = getSortedReviews(reviews);
-
+const App = ({offers}) => {
   return (
     <Router history={browserHistory}>
       <Switch>
-        <Route exact path="/">
+        <Route exact path={Path.HOME}>
           <MainPage offers={offers} />
         </Route>
-        <Route exact path="/login">
+        <Route exact path={Path.LOGIN}>
           <Login />
         </Route>
         <PrivateRoute
           exact
-          path="/favorites"
-          render={() => <Favorites
-            offers={favoriteOffers}
-          />}
+          path={Path.FAVORITES}
+          render={() => <Favorites />}
         />
-        <Route exact path="/offer/:id">
-          <Offer
-            reviews={sortedReviews}
-            offers={offers}
-          />
+        <Route exact path={`${Path.OFFER}/:id`}>
+          <Offer/>
         </Route>
         <Route>
           <PageNotFound />
@@ -50,11 +42,10 @@ const App = ({offers, reviews}) => {
 
 App.propTypes = {
   offers: arrayOf(offersPropTypes),
-  reviews: arrayOf(reviewPropTypes),
 };
 
 const mapStateToProps = (state) => ({
-  offers: state.offers,
+  offers: getOffers(state),
 });
 
 export default connect(mapStateToProps)(App);

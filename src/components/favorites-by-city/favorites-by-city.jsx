@@ -1,19 +1,30 @@
 import React from 'react';
-import {string, arrayOf} from 'prop-types';
+import {connect} from 'react-redux';
+import {arrayOf, func} from 'prop-types';
+import browserHistory from '../../services/browser-history';
+
 import OffersList from '../offers-list/offers-list';
-
 import offersPropTypes from '../../prop-types/offers';
-import {PlaceCardType} from '../../util/const';
+import {changeCity, getOffers} from '../../store/actions';
+import {PlaceCardType, Path} from '../../util/const';
+import cityPropTypes from '../../prop-types/city';
 
-const FavoritesByCity = ({offers, city}) => {
+const FavoritesByCity = ({offers, city, updateCity}) => {
+  const {name} = city;
+
+  const handleCityChange = (cityForUpdate) => {
+    updateCity(cityForUpdate);
+  };
+
   return (
     <li className="favorites__locations-items">
       <div className="favorites__locations locations locations--current">
-        <div className="locations__item">
-          <a className="locations__item-link" href="#">
-            <span>{city}</span>
-          </a>
-        </div>
+        <button
+          onClick={handleCityChange.bind(null, city)}
+          className="locations__item-link"
+        >
+          <span>{name}</span>
+        </button>
       </div>
       <div className="favorites__places">
         <OffersList
@@ -27,7 +38,17 @@ const FavoritesByCity = ({offers, city}) => {
 
 FavoritesByCity.propTypes = {
   offers: arrayOf(offersPropTypes),
-  city: string.isRequired,
+  city: cityPropTypes.isRequired,
+  updateCity: func.isRequired,
 };
 
-export default FavoritesByCity;
+const mapDispatchToProps = (dispatch) => ({
+  updateCity(city) {
+    dispatch(changeCity(city));
+    dispatch(getOffers());
+
+    browserHistory.push(Path.HOME);
+  },
+});
+
+export default connect(null, mapDispatchToProps)(FavoritesByCity);

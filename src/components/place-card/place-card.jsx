@@ -1,13 +1,16 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {func, string} from 'prop-types';
+import browserHistory from '../../services/browser-history';
 
-import {ActionCreator} from '../../store/actions';
+import {changeHoveredOffer, clearLoadedOffer, changeActiveOffer} from '../../store/actions';
 import offersPropTypes from '../../prop-types/offers';
 import {getFormattedRating} from '../../util/util';
-import {PlaceType, PlaceCardType, AuthorizationStatus} from '../../util/const';
-import {manageFavorite, fetchOffersList, fetchRelatedOffers} from '../../store/api-actions';
+import {PlaceType, PlaceCardType, AuthorizationStatus, Path} from '../../util/const';
+import {manageFavorite, fetchOffersList, fetchRelatedOffers, fetchFavoritesList} from '../../store/api-actions';
 import {imageButtonStyle, titleButtonStyle} from './place-card-style';
+import {getHoveredOffer} from '../../store/offer/selectors';
+import {getAuthorizationStatus} from '../../store/user/selectors';
 
 const getCardClass = (cardType) => {
   switch (cardType) {
@@ -33,7 +36,7 @@ const getCardClass = (cardType) => {
   };
 };
 
-const PlaceCard = ({offer, cardType, updateHoveredOffer, updateActiveOffer, manageFavoriteStatus, authorizationStatus, goToLogin}) => {
+const PlaceCard = ({offer, cardType, updateHoveredOffer, updateActiveOffer, manageFavoriteStatus, authorizationStatus}) => {
   const {previewImage, isPremium, price, title, type, isFavorite, rating, id} = offer;
   const cardClasses = getCardClass(cardType);
 
@@ -51,7 +54,7 @@ const PlaceCard = ({offer, cardType, updateHoveredOffer, updateActiveOffer, mana
 
   const handleFavoriteClick = () => authorizationStatus === AuthorizationStatus.AUTH
     ? manageFavoriteStatus(id, !isFavorite, cardType)
-    : goToLogin();
+    : browserHistory.push(Path.LOGIN);
 
   return (
     <article
@@ -60,6 +63,7 @@ const PlaceCard = ({offer, cardType, updateHoveredOffer, updateActiveOffer, mana
       onMouseLeave={handleOfferHoverOut}
     >
       {isPremium && <div className="place-card__mark"><span>Premium</span></div>}
+
       <div className={`${cardClasses.image} place-card__image-wrapper`}>
         <button
           onClick={handleOfferClick}
@@ -112,31 +116,41 @@ PlaceCard.propTypes = {
   updateHoveredOffer: func.isRequired,
   updateActiveOffer: func.isRequired,
   manageFavoriteStatus: func.isRequired,
-  goToLogin: func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  hoveredOffer: state.hoveredOffer,
-  authorizationStatus: state.authorizationStatus,
+  hoveredOffer: getHoveredOffer(state),
+  authorizationStatus: getAuthorizationStatus(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
   updateHoveredOffer(id) {
-    dispatch(ActionCreator.changeHoveredOffer(id));
+    dispatch(changeHoveredOffer(id));
   },
   updateActiveOffer(id) {
-    dispatch(ActionCreator.clearLoadedOffer());
-    dispatch(ActionCreator.changeActiveOffer(id));
-    dispatch(ActionCreator.redirectToRoute(`/offer/${id}`));
+    dispatch(clearLoadedOffer());
+    dispatch(changeActiveOffer(id));
+
+    browserHistory.push(`${Path.OFFER}/${id}`);
   },
   manageFavoriteStatus(id, status, cardType) {
-    const offers = cardType === PlaceCardType.RELATED ? fetchRelatedOffers(id) : fetchOffersList();
+    let offers = [];
+
+    switch (cardType) {
+      case PlaceCardType.RELATED:
+        offers = fetchRelatedOffers(id);
+        break;
+
+      case PlaceCardType.FAVORITE:
+        offers = fetchFavoritesList();
+        break;
+
+      default:
+        offers = fetchOffersList();
+    }
 
     dispatch(manageFavorite(id, status));
     dispatch(offers);
-  },
-  goToLogin() {
-    dispatch(ActionCreator.redirectToRoute(`/login`));
   },
 });
 

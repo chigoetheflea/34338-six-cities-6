@@ -110,6 +110,14 @@ const ReviewFormStatus = {
   ERROR: `error`,
 };
 
+const Path = {
+  HOME: `/`,
+  LOGIN: `/login`,
+  PAGE_404: `/404`,
+  FAVORITES: `/favorites`,
+  OFFER: `/offer`,
+};
+
 export {
   CITIES,
   MONTHES,
@@ -122,4 +130,5 @@ export {
   PlaceType,
   ReviewSettings,
   ReviewFormStatus,
+  Path,
 };

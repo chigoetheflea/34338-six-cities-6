@@ -7,11 +7,12 @@ import Loading from '../loading/loading';
 import {PlaceCardType} from '../../util/const';
 import {fetchRelatedOffers} from '../../store/api-actions';
 import offersPropTypes from '../../prop-types/offers';
+import {getActiveOffer, getRelatedLoadingStatus, getRelatedOffers} from '../../store/offer/selectors';
 
-const Related = ({id, relatedOffers, isRelatedLoaded, loadRelatedOffers}) => {
+const Related = ({activeOffer, relatedOffers, isRelatedLoaded, loadRelatedOffers}) => {
   useEffect(() => {
     if (!isRelatedLoaded) {
-      loadRelatedOffers(id);
+      loadRelatedOffers(activeOffer);
     }
   }, [isRelatedLoaded]);
 
@@ -37,21 +38,21 @@ const Related = ({id, relatedOffers, isRelatedLoaded, loadRelatedOffers}) => {
 };
 
 Related.propTypes = {
-  id: number.isRequired,
+  activeOffer: number.isRequired,
   isRelatedLoaded: bool.isRequired,
   loadRelatedOffers: func.isRequired,
   relatedOffers: arrayOf(offersPropTypes),
 };
 
 const mapStateToProps = (state) => ({
-  id: state.activeOffer,
-  isRelatedLoaded: state.isRelatedLoaded,
-  relatedOffers: state.relatedOffers,
+  activeOffer: getActiveOffer(state),
+  isRelatedLoaded: getRelatedLoadingStatus(state),
+  relatedOffers: getRelatedOffers(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  loadRelatedOffers(id) {
-    dispatch(fetchRelatedOffers(id));
+  loadRelatedOffers(activeOffer) {
+    dispatch(fetchRelatedOffers(activeOffer));
   },
 });
 
