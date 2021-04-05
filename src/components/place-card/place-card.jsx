@@ -130,7 +130,6 @@ const mapDispatchToProps = (dispatch) => ({
   updateActiveOffer(id) {
     dispatch(clearLoadedOffer());
     dispatch(changeActiveOffer(id));
-
     browserHistory.push(`${Path.OFFER}/${id}`);
   },
   manageFavoriteStatus(id, status, cardType) {
