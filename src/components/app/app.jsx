@@ -12,23 +12,24 @@ import PrivateRoute from '../private-route/private-route';
 import offersPropTypes from '../../prop-types/offers';
 import browserHistory from '../../services/browser-history';
 import {getOffers} from '../../store/offers/selectors';
+import {Path} from '../../util/const';
 
 const App = ({offers}) => {
   return (
     <Router history={browserHistory}>
       <Switch>
-        <Route exact path="/">
+        <Route exact path={Path.HOME}>
           <MainPage offers={offers} />
         </Route>
-        <Route exact path="/login">
+        <Route exact path={Path.LOGIN}>
           <Login />
         </Route>
         <PrivateRoute
           exact
-          path="/favorites"
+          path={Path.FAVORITES}
           render={() => <Favorites />}
         />
-        <Route exact path="/offer/:id">
+        <Route exact path={`${Path.OFFER}/:id`}>
           <Offer/>
         </Route>
         <Route>

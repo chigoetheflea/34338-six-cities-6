@@ -1,6 +1,7 @@
 import React, {useEffect} from 'react';
 import {arrayOf, bool, func, number, string} from 'prop-types';
 import {connect} from 'react-redux';
+import browserHistory from '../../services/browser-history';
 
 import Header from '../header/header';
 import ReviewForm from '../review-form/review-form';
@@ -10,10 +11,10 @@ import Loading from '../loading/loading';
 import Related from '../related/related';
 import reviewPropTypes from '../../prop-types/reviews';
 import offersPropTypes from '../../prop-types/offers';
-import {PlaceType, AuthorizationStatus} from '../../util/const';
+import {PlaceType, AuthorizationStatus, Path} from '../../util/const';
 import {getFormattedRating, getRandomArrayElements} from '../../util/util';
 import {fetchOffer, manageFavorite} from '../../store/api-actions';
-import {clearLoadedOffer, redirectToRoute} from '../../store/actions';
+import {clearLoadedOffer} from '../../store/actions';
 import {getLoadedOffer, getOfferLoadingStatus, getActiveOffer, getRelatedOffers, getRelatedLoadingStatus} from '../../store/offer/selectors';
 import {getAuthorizationStatus} from '../../store/user/selectors';
 
@@ -201,7 +202,7 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(manageFavorite(id, status));
   },
   goToLogin() {
-    dispatch(redirectToRoute(`/login`));
+    browserHistory.push(Path.LOGIN);
   },
 });
 

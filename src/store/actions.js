@@ -73,11 +73,6 @@ const saveAuthInfo = (info) => ({
   payload: info,
 });
 
-const redirectToRoute = (url) => ({
-  type: ActionType.REDIRECT_TO_ROUTE,
-  payload: url,
-});
-
 const loadOffer = (info) => ({
   type: ActionType.LOAD_OFFER,
   payload: info,
@@ -120,7 +115,6 @@ export {
   loadOffers,
   clearOffers,
   saveAuthInfo,
-  redirectToRoute,
   loadOffer,
   clearLoadedOffer,
   loadRelatedOffers,

@@ -1,9 +1,9 @@
+import browserHistory from '../services/browser-history';
 import {
   loadOffers,
   getOffers,
   saveAuthInfo,
   requestAuthorization,
-  redirectToRoute,
   loadOffer,
   loadRelatedOffers,
   loadReviews,
@@ -11,7 +11,7 @@ import {
   showReviewError,
   loadFavorites,
 } from '../store/actions';
-import {AuthorizationStatus} from '../util/const';
+import {AuthorizationStatus, Path} from '../util/const';
 
 const fetchOffersList = () => (dispatch, _getState, api) => (
   api.get(`/hotels`)
@@ -34,13 +34,13 @@ const login = ({login: email, password}) => (dispatch, _getState, api) => (
   api.post(`/login`, {email, password})
     .then(({data}) => dispatch(saveAuthInfo(data)))
     .then(() => dispatch(requestAuthorization(AuthorizationStatus.AUTH)))
-    .then(() => dispatch(redirectToRoute(`/`)))
+    .then(() => browserHistory.push(Path.HOME))
 );
 
 const fetchOffer = (id) => (dispatch, _getState, api) => (
   api.get(`/hotels/${id}`)
     .then(({data}) => dispatch(loadOffer(data)))
-    .catch(() => dispatch(redirectToRoute(`/404`)))
+    .catch(() => browserHistory.push(Path.PAGE_404))
 );
 
 const fetchRelatedOffers = (id) => (dispatch, _getState, api) => (

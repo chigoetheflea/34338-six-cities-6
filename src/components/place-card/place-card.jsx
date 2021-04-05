@@ -1,11 +1,12 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {func, string} from 'prop-types';
+import browserHistory from '../../services/browser-history';
 
-import {changeHoveredOffer, clearLoadedOffer, changeActiveOffer, redirectToRoute} from '../../store/actions';
+import {changeHoveredOffer, clearLoadedOffer, changeActiveOffer} from '../../store/actions';
 import offersPropTypes from '../../prop-types/offers';
 import {getFormattedRating} from '../../util/util';
-import {PlaceType, PlaceCardType, AuthorizationStatus} from '../../util/const';
+import {PlaceType, PlaceCardType, AuthorizationStatus, Path} from '../../util/const';
 import {manageFavorite, fetchOffersList, fetchRelatedOffers, fetchFavoritesList} from '../../store/api-actions';
 import {imageButtonStyle, titleButtonStyle} from './place-card-style';
 import {getHoveredOffer} from '../../store/offer/selectors';
@@ -130,7 +131,8 @@ const mapDispatchToProps = (dispatch) => ({
   updateActiveOffer(id) {
     dispatch(clearLoadedOffer());
     dispatch(changeActiveOffer(id));
-    dispatch(redirectToRoute(`/offer/${id}`));
+
+    browserHistory.push(`${Path.OFFER}/${id}`);
   },
   manageFavoriteStatus(id, status, cardType) {
     let offers = [];
@@ -152,7 +154,7 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(offers);
   },
   goToLogin() {
-    dispatch(redirectToRoute(`/login`));
+    browserHistory.push(Path.LOGIN);
   },
 });
 

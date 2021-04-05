@@ -14,7 +14,6 @@ import {AuthorizationStatus} from './util/const';
 import {getAdaptedOffers} from './store/middlewares/offers';
 import {getAdaptedUserInfo} from './store/middlewares/user';
 import {getAdaptedReviews} from './store/middlewares/reviews';
-import {redirect} from './store/middlewares/rediret';
 
 const api = createApi(() => store.dispatch(ActionCreator.requestAuthorization(AuthorizationStatus.NO_AUTH)));
 
@@ -24,7 +23,6 @@ const store = createStore(
         applyMiddleware(thunk.withExtraArgument(api)),
         applyMiddleware(getAdaptedOffers),
         applyMiddleware(getAdaptedUserInfo),
-        applyMiddleware(redirect),
         applyMiddleware(getAdaptedReviews)
     )
 );
