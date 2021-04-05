@@ -30,7 +30,6 @@ const Offer = ({
   relatedOffers,
   authorizationStatus,
   manageFavoriteStatus,
-  goToLogin
 }) => {
   let neighbourhoodLocations = [];
 
@@ -59,7 +58,7 @@ const Offer = ({
 
   const handleFavoriteClick = () => authorizationStatus === AuthorizationStatus.AUTH
     ? manageFavoriteStatus(activeOffer, !loadedOffer.isFavorite)
-    : goToLogin();
+    : browserHistory.push(Path.LOGIN);
 
   return (
     <div className="page">
@@ -179,7 +178,6 @@ Offer.propTypes = {
   loadOffer: func.isRequired,
   clearOffer: func.isRequired,
   manageFavoriteStatus: func.isRequired,
-  goToLogin: func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -200,9 +198,6 @@ const mapDispatchToProps = (dispatch) => ({
   },
   manageFavoriteStatus(id, status) {
     dispatch(manageFavorite(id, status));
-  },
-  goToLogin() {
-    browserHistory.push(Path.LOGIN);
   },
 });
 

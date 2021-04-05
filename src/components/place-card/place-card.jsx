@@ -36,7 +36,7 @@ const getCardClass = (cardType) => {
   };
 };
 
-const PlaceCard = ({offer, cardType, updateHoveredOffer, updateActiveOffer, manageFavoriteStatus, authorizationStatus, goToLogin}) => {
+const PlaceCard = ({offer, cardType, updateHoveredOffer, updateActiveOffer, manageFavoriteStatus, authorizationStatus}) => {
   const {previewImage, isPremium, price, title, type, isFavorite, rating, id} = offer;
   const cardClasses = getCardClass(cardType);
 
@@ -54,7 +54,7 @@ const PlaceCard = ({offer, cardType, updateHoveredOffer, updateActiveOffer, mana
 
   const handleFavoriteClick = () => authorizationStatus === AuthorizationStatus.AUTH
     ? manageFavoriteStatus(id, !isFavorite, cardType)
-    : goToLogin();
+    : browserHistory.push(Path.LOGIN);
 
   return (
     <article
@@ -116,7 +116,6 @@ PlaceCard.propTypes = {
   updateHoveredOffer: func.isRequired,
   updateActiveOffer: func.isRequired,
   manageFavoriteStatus: func.isRequired,
-  goToLogin: func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -152,9 +151,6 @@ const mapDispatchToProps = (dispatch) => ({
 
     dispatch(manageFavorite(id, status));
     dispatch(offers);
-  },
-  goToLogin() {
-    browserHistory.push(Path.LOGIN);
   },
 });
 
