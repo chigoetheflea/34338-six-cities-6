@@ -25,7 +25,10 @@ const simpleReview = {
 
 const simpleReviews = [
   {...simpleReview},
-  {...simpleReview},
+  {
+    ...simpleReview,
+    id: 2,
+  },
 ];
 
 describe(`Reviews reducer works correctly`, () => {

@@ -2,10 +2,11 @@ import React, {useEffect, useRef} from 'react';
 import {connect} from 'react-redux';
 import leaflet from 'leaflet';
 import {arrayOf, number, shape, string} from 'prop-types';
-import locationPropTypes from '../../prop-types/location';
-
 import 'leaflet/dist/leaflet.css';
+
+import locationPropTypes from '../../prop-types/location';
 import {getHoveredOffer, getRelatedLoadingStatus} from '../../store/offer/selectors';
+import {DEFAULT_CITY} from '../../util/const';
 
 const icon = leaflet.icon({
   iconUrl: `img/pin.svg`,
@@ -23,7 +24,7 @@ const LeafletMap = {
   HEIGHT: `100%`,
 };
 
-const Map = ({city, points, hoveredOffer}) => {
+const Map = ({city = DEFAULT_CITY, points, hoveredOffer}) => {
   const mapRef = useRef();
   const {latitude, longitude, zoom} = city;
 

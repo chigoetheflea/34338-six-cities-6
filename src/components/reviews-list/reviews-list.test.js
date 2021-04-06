@@ -22,7 +22,10 @@ const simpleReview = {
 
 const simpleReviews = [
   {...simpleReview},
-  {...simpleReview},
+  {
+    ...simpleReview,
+    id: 2,
+  },
 ];
 
 const simpleOfferId = 10;

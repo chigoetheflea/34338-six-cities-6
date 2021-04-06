@@ -42,7 +42,7 @@ const simpleOffer = {
     name: `Angelina`
   },
   id: 1,
-  images: [``, ``],
+  images: [`img1`, `img2`],
   isFavorite: true,
   isPremium: false,
   location: {
@@ -60,7 +60,10 @@ const simpleOffer = {
 
 const simpleOffers = [
   {...simpleOffer},
-  {...simpleOffer},
+  {
+    ...simpleOffer,
+    id: 2,
+  },
 ];
 
 const simpleReviews = [

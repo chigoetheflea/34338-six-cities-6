@@ -27,7 +27,7 @@ const simpleOffer = {
     name: `Angelina`
   },
   id: 1,
-  images: [``, ``],
+  images: [`img1`, `img2`],
   isFavorite: true,
   isPremium: false,
   location: {

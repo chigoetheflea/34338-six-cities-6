@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {bool, number, shape, string} from 'prop-types';
 
-import {AuthorizationStatus} from '../../util/const';
+import {AuthorizationStatus, Path} from '../../util/const';
 import {getAuthorizationStatus, getLoggedUser} from '../../store/user/selectors';
 
 const Header = ({authorizationStatus, loggedUser, isFrontPage = false}) => {
@@ -11,7 +11,7 @@ const Header = ({authorizationStatus, loggedUser, isFrontPage = false}) => {
     return (
       userStatus === AuthorizationStatus.AUTH
         ? <Link
-          to="/favorites"
+          to={Path.FAVORITES}
           className="header__nav-link header__nav-link--profile"
         >
           <div className="header__avatar-wrapper user__avatar-wrapper">
@@ -20,7 +20,7 @@ const Header = ({authorizationStatus, loggedUser, isFrontPage = false}) => {
           <span className="header__user-name user__name">{loggedUser.email}</span>
         </Link>
         : <Link
-          to="/login"
+          to={Path.LOGIN}
           className="header__nav-link header__nav-link--profile"
         >
           <span className="header__login">Sign in</span>
@@ -36,7 +36,7 @@ const Header = ({authorizationStatus, loggedUser, isFrontPage = false}) => {
             <Link
               className="header__logo-link"
               style={{pointerEvents: isFrontPage ? `none` : `auto`}}
-              to="/"
+              to={Path.HOME}
             >
               <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41" />
             </Link>
