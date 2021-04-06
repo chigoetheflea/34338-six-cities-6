@@ -44,7 +44,7 @@ const getSortedReviews = (reviews) => {
       return 0;
     }
 
-    return prevReview.date < nextReview.date ? -1 : 1;
+    return prevReview.date > nextReview.date ? -1 : 1;
   });
 
   return reviewsForSorting;

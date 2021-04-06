@@ -1,15 +1,16 @@
 import React, {useRef} from 'react';
 import {connect} from 'react-redux';
-import {func} from 'prop-types';
+import {func, string} from 'prop-types';
 import browserHistory from '../../services/browser-history';
 
 import Header from '../header/header';
 import {changeCity} from '../../store/actions';
 import {login} from '../../store/api-actions';
-import {CITIES, DEFAULT_CITY, Path} from '../../util/const';
+import {CITIES, DEFAULT_CITY, Path, AuthorizationStatus} from '../../util/const';
 import {getRandomArrayElement} from '../../util/util';
+import {getAuthorizationStatus} from '../../store/user/selectors';
 
-const Login = ({loginUser, updateCity}) => {
+const Login = ({loginUser, updateCity, authorizationStatus}) => {
   const loginRef = useRef();
   const passwordRef = useRef();
 
@@ -29,6 +30,10 @@ const Login = ({loginUser, updateCity}) => {
   const handleCityChange = () => {
     updateCity(randomCity);
   };
+
+  if (authorizationStatus === AuthorizationStatus.AUTH) {
+    browserHistory.push(Path.HOME);
+  }
 
   return (
     <div className="page page--gray page--login">
@@ -88,7 +93,12 @@ const Login = ({loginUser, updateCity}) => {
 Login.propTypes = {
   loginUser: func.isRequired,
   updateCity: func.isRequired,
+  authorizationStatus: string,
 };
+
+const mapStateToProps = (state) => ({
+  authorizationStatus: getAuthorizationStatus(state),
+});
 
 const mapDispatchToProps = (dispatch) => ({
   loginUser(data) {
@@ -101,4 +111,4 @@ const mapDispatchToProps = (dispatch) => ({
   },
 });
 
-export default connect(null, mapDispatchToProps)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

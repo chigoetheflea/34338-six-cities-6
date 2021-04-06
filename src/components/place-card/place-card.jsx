@@ -59,8 +59,8 @@ const PlaceCard = ({offer, cardType, updateHoveredOffer, updateActiveOffer, mana
   return (
     <article
       className={`${cardClasses.main} place-card`}
-      onMouseEnter={handleOfferHoverIn}
-      onMouseLeave={handleOfferHoverOut}
+      onMouseEnter={cardType !== PlaceCardType.RELATED ? handleOfferHoverIn : null}
+      onMouseLeave={cardType !== PlaceCardType.RELATED ? handleOfferHoverOut : null}
     >
       {isPremium && <div className="place-card__mark"><span>Premium</span></div>}
 

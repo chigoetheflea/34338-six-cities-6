@@ -5,9 +5,9 @@ import {arrayOf, bool, func} from 'prop-types';
 
 import Header from '../header/header';
 import Loading from '../loading/loading';
-import FavoritesByCity from '../favorites-by-city/favorites-by-city';
+import FavoritesEmpty from './favorites-empty';
+import FavoritesFull from './favorites-full';
 import offersPropTypes from '../../prop-types/offers';
-import {CITIES} from '../../util/const';
 import {fetchFavoritesList} from '../../store/api-actions';
 import {getFavorites, getFavoritesLoadingStatus} from '../../store/offers/selectors';
 import {clearFavorites} from '../../store/actions';
@@ -36,18 +36,7 @@ const Favorites = ({offers, isFavoritesLoaded, loadFavoriteOffers, clearFavorite
       <main className="page__main page__main--favorites">
         <div className="page__favorites-container container">
           <section className="favorites">
-            <h1 className="favorites__title">Saved listing</h1>
-            <ul className="favorites__list">
-              {CITIES.map((city) => {
-                const {name: currentCityName} = city;
-
-                const offersInCity = offers.filter(({city: {name}}) => name === currentCityName);
-
-                return (
-                  offersInCity.length > 0 && <FavoritesByCity key={currentCityName} offers={offersInCity} city={city} />
-                );
-              })}
-            </ul>
+            {offers.length ? <FavoritesFull offers={offers} /> : <FavoritesEmpty />}
           </section>
         </div>
       </main>

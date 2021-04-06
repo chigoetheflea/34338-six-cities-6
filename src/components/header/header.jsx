@@ -8,22 +8,21 @@ import {getAuthorizationStatus, getLoggedUser} from '../../store/user/selectors'
 
 const Header = ({authorizationStatus, loggedUser, isFrontPage = false}) => {
   const getAuthorizationBlock = (userStatus) => {
-    const avatar = <div className="header__avatar-wrapper user__avatar-wrapper" />;
-
     return (
       userStatus === AuthorizationStatus.AUTH
         ? <Link
           to="/favorites"
           className="header__nav-link header__nav-link--profile"
         >
-          {avatar}
+          <div className="header__avatar-wrapper user__avatar-wrapper">
+            <img src={loggedUser.avatarUrl} alt="Avatar" width="20px" height="20px" />
+          </div>
           <span className="header__user-name user__name">{loggedUser.email}</span>
         </Link>
         : <Link
           to="/login"
           className="header__nav-link header__nav-link--profile"
         >
-          {avatar}
           <span className="header__login">Sign in</span>
         </Link>
     );
