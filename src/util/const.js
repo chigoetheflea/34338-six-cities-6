@@ -110,6 +110,8 @@ const ReviewFormStatus = {
   ERROR: `error`,
 };
 
+const MAX_REVIEWS_COUNT = 10;
+
 const Path = {
   HOME: `/`,
   LOGIN: `/login`,
@@ -134,4 +136,5 @@ export {
   ReviewSettings,
   ReviewFormStatus,
   Path,
+  MAX_REVIEWS_COUNT,
 };

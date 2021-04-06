@@ -16,9 +16,7 @@ const getCity = (state) => state[NameSpace.OFFERS].city;
 
 const getFilteredOffers = createSelector(
     [getOffers, getSorting, getCity],
-    (offers, sorting, city) => {
-      return getSortedOffers(getFilteredOffersByCity(offers, city), sorting);
-    }
+    (offers, sorting, city) => getSortedOffers(getFilteredOffersByCity(offers, city), sorting)
 );
 
 export {
