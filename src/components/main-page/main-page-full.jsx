@@ -19,7 +19,7 @@ const MainPageFull = ({offers, city}) => {
           <h2 className="visually-hidden">Places</h2>
           <b className="places__found">{offers.length} places to stay in {name}</b>
           <Sorting />
-          <div className="cities__places-list places__list tabs__content">
+          <div className="cities__places-list places__list tabs__content" data-testid="offers-list">
             <OffersList
               offers={offers}
               cardType={PlaceCardType.BASIC}
@@ -27,7 +27,7 @@ const MainPageFull = ({offers, city}) => {
           </div>
         </section>
         <div className="cities__right-section">
-          <section className="cities__map map">
+          <section className="cities__map map" data-testid="map">
             <Map
               city={location}
               points={currentCityLocations}

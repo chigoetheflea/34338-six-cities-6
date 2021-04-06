@@ -44,6 +44,7 @@ const Sorting = ({sorting, updateSortingType}) => {
                 className={`places__option ${type === sorting ? ACTIVE_SORTING_CLASS : ``}`}
                 tabIndex="0"
                 data-type={type}
+                data-testid={type}
                 onClick={handleSortingChange}
               >
                 {type}

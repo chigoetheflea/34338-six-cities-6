@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import {Router} from 'react-router-dom';
 import {createStore, applyMiddleware} from 'redux';
 import thunk from 'redux-thunk';
 import {Provider} from 'react-redux';
@@ -14,6 +15,7 @@ import {AuthorizationStatus} from './util/const';
 import {getAdaptedOffers} from './store/middlewares/offers';
 import {getAdaptedUserInfo} from './store/middlewares/user';
 import {getAdaptedReviews} from './store/middlewares/reviews';
+import browserHistory from './services/browser-history';
 
 const api = createApi(() => store.dispatch(ActionCreator.requestAuthorization(AuthorizationStatus.NO_AUTH)));
 
@@ -32,7 +34,9 @@ store.dispatch(fetchOffersList());
 
 ReactDOM.render(
     <Provider store={store}>
-      <App />
+      <Router history={browserHistory}>
+        <App />
+      </Router>
     </Provider>,
     document.querySelector(`#root`)
 );

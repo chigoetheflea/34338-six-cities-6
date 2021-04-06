@@ -5,7 +5,7 @@ import browserHistory from '../../services/browser-history';
 
 import OffersList from '../offers-list/offers-list';
 import offersPropTypes from '../../prop-types/offers';
-import {changeCity, getOffers} from '../../store/actions';
+import {changeCity} from '../../store/actions';
 import {PlaceCardType, Path} from '../../util/const';
 import cityPropTypes from '../../prop-types/city';
 
@@ -23,10 +23,10 @@ const FavoritesByCity = ({offers, city, updateCity}) => {
           onClick={handleCityChange.bind(null, city)}
           className="locations__item-link"
         >
-          <span>{name}</span>
+          <span data-testid="favorites-by-city-name">{name}</span>
         </button>
       </div>
-      <div className="favorites__places">
+      <div className="favorites__places" data-testid="favorites-by-city-list">
         <OffersList
           offers={offers}
           cardType={PlaceCardType.FAVORITE}
@@ -45,7 +45,6 @@ FavoritesByCity.propTypes = {
 const mapDispatchToProps = (dispatch) => ({
   updateCity(city) {
     dispatch(changeCity(city));
-    dispatch(getOffers());
 
     browserHistory.push(Path.HOME);
   },

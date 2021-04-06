@@ -115,7 +115,10 @@ const Path = {
   LOGIN: `/login`,
   PAGE_404: `/404`,
   FAVORITES: `/favorites`,
+  FAVORITE: `/favorite`,
   OFFER: `/offer`,
+  OFFERS: `/hotels`,
+  REVIEWS: `/comments`,
 };
 
 export {
