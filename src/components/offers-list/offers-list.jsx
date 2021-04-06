@@ -9,7 +9,7 @@ const OffersList = ({offers, cardType}) => {
       {
         offers.map((offer) =>
           <PlaceCard
-            key={`${offer.id}`}
+            key={`${offer.id}-${cardType}`}
             offer={offer}
             cardType={cardType}
           />

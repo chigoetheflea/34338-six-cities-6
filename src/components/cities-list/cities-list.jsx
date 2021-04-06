@@ -2,7 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {arrayOf, func} from 'prop-types';
 
-import {changeCity, getOffers} from '../../store/actions';
+import {changeCity} from '../../store/actions';
 import cityPropTypes from '../../prop-types/city';
 import {getCity} from '../../store/offers/selectors';
 
@@ -53,7 +53,6 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   updateCity(city) {
     dispatch(changeCity(city));
-    dispatch(getOffers());
   },
 });
 

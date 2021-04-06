@@ -3,7 +3,6 @@ const ActionType = {
   REQUEST_AUTHORIZATION: `user/requestAuthorization`,
   SAVE_AUTH_INFO: `user/login`,
   CHANGE_CITY: `city/change`,
-  GET_OFFERS: `offers/getOffers`,
   CHANGE_SORTING: `offers/changeSorting`,
   LOAD_OFFERS: `offers/load`,
   CLEAR_OFFERS: `offers/clear`,
@@ -23,10 +22,6 @@ const ActionType = {
 const changeCity = (city) => ({
   type: ActionType.CHANGE_CITY,
   payload: city,
-});
-
-const getOffers = () => ({
-  type: ActionType.GET_OFFERS,
 });
 
 const changeSorting = (sortingType) => ({
@@ -62,7 +57,6 @@ const loadFavorites = (offers) => ({
 const clearFavorites = () => ({
   type: ActionType.CLEAR_FAVORITES,
 });
-
 
 const clearOffers = () => ({
   type: ActionType.CLEAR_OFFERS,
@@ -107,7 +101,6 @@ const clearReviewFormStatus = () => ({
 export {
   ActionType,
   changeCity,
-  getOffers,
   changeSorting,
   changeHoveredOffer,
   changeActiveOffer,

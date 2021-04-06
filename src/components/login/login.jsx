@@ -4,9 +4,9 @@ import {func} from 'prop-types';
 import browserHistory from '../../services/browser-history';
 
 import Header from '../header/header';
-import {changeCity, getOffers} from '../../store/actions';
+import {changeCity} from '../../store/actions';
 import {login} from '../../store/api-actions';
-import {CITIES, Path} from '../../util/const';
+import {CITIES, DEFAULT_CITY, Path} from '../../util/const';
 import {getRandomArrayElement} from '../../util/util';
 
 const Login = ({loginUser, updateCity}) => {
@@ -24,8 +24,7 @@ const Login = ({loginUser, updateCity}) => {
     loginUser(userData);
   };
 
-  const randomCity = getRandomArrayElement(CITIES);
-  const {name} = randomCity;
+  const randomCity = getRandomArrayElement(CITIES) || DEFAULT_CITY;
 
   const handleCityChange = () => {
     updateCity(randomCity);
@@ -38,7 +37,7 @@ const Login = ({loginUser, updateCity}) => {
       <main className="page__main page__main--login">
         <div className="page__login-container container">
           <section className="login">
-            <h1 className="login__title">Sign in</h1>
+            <h1 className="login__title" data-testid="login-title">Sign in</h1>
             <form
               onSubmit={handleUserLogin}
               className="login__form form"
@@ -52,6 +51,7 @@ const Login = ({loginUser, updateCity}) => {
                   name="email"
                   placeholder="Email"
                   required
+                  data-testid="email"
                 />
               </div>
               <div className="login__input-wrapper form__input-wrapper">
@@ -63,9 +63,10 @@ const Login = ({loginUser, updateCity}) => {
                   name="password"
                   placeholder="Password"
                   required
+                  data-testid="password"
                 />
               </div>
-              <button className="login__submit form__submit button" type="submit">Sign in</button>
+              <button className="login__submit form__submit button" type="submit" data-testid="login-button">Sign in</button>
             </form>
           </section>
           <section className="locations locations--login locations--current">
@@ -74,7 +75,7 @@ const Login = ({loginUser, updateCity}) => {
                 onClick={handleCityChange}
                 className="locations__item-link"
               >
-                <span>{name}</span>
+                <span>{randomCity.name}</span>
               </button>
             </div>
           </section>
@@ -95,7 +96,6 @@ const mapDispatchToProps = (dispatch) => ({
   },
   updateCity(city) {
     dispatch(changeCity(city));
-    dispatch(getOffers());
 
     browserHistory.push(Path.HOME);
   },

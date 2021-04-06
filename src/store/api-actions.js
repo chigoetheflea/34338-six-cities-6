@@ -1,7 +1,6 @@
 import browserHistory from '../services/browser-history';
 import {
   loadOffers,
-  getOffers,
   saveAuthInfo,
   requestAuthorization,
   loadOffer,
@@ -14,52 +13,51 @@ import {
 import {AuthorizationStatus, Path} from '../util/const';
 
 const fetchOffersList = () => (dispatch, _getState, api) => (
-  api.get(`/hotels`)
+  api.get(Path.OFFERS)
     .then(({data}) => dispatch(loadOffers(data)))
-    .then(({data}) => dispatch(getOffers(data)))
 );
 
 const fetchFavoritesList = () => (dispatch, _getState, api) => (
-  api.get(`/favorite`)
+  api.get(Path.FAVORITE)
     .then(({data}) => dispatch(loadFavorites(data)))
 );
 
 const checkAuthorization = () => (dispatch, _getState, api) => (
-  api.get(`/login`)
+  api.get(Path.LOGIN)
     .then(({data}) => dispatch(saveAuthInfo(data)))
     .then(() => dispatch(requestAuthorization(AuthorizationStatus.AUTH)))
 );
 
 const login = ({login: email, password}) => (dispatch, _getState, api) => (
-  api.post(`/login`, {email, password})
+  api.post(Path.LOGIN, {email, password})
     .then(({data}) => dispatch(saveAuthInfo(data)))
     .then(() => dispatch(requestAuthorization(AuthorizationStatus.AUTH)))
     .then(() => browserHistory.push(Path.HOME))
 );
 
 const fetchOffer = (id) => (dispatch, _getState, api) => (
-  api.get(`/hotels/${id}`)
+  api.get(`${Path.OFFERS}/${id}`)
     .then(({data}) => dispatch(loadOffer(data)))
     .catch(() => browserHistory.push(Path.PAGE_404))
 );
 
 const fetchRelatedOffers = (id) => (dispatch, _getState, api) => (
-  api.get(`/hotels/${id}/nearby`)
+  api.get(`${Path.OFFERS}/${id}/nearby`)
     .then(({data}) => dispatch(loadRelatedOffers(data)))
 );
 
 const manageFavorite = (id, status) => (dispatch, _getState, api) => (
-  api.post(`/favorite/${id}/${+status}`)
+  api.post(`${Path.FAVORITE}/${id}/${+status}`)
     .then(({data}) => dispatch(loadOffer(data)))
 );
 
 const fetchReviews = (id) => (dispatch, _getState, api) => (
-  api.get(`/comments/${id}`)
+  api.get(`${Path.REVIEWS}/${id}`)
     .then(({data}) => dispatch(loadReviews(data)))
 );
 
 const postReview = ({comment, rating, id}) => (dispatch, _getState, api) => (
-  api.post(`/comments/${id}`, {comment, rating})
+  api.post(`${Path.REVIEWS}/${id}`, {comment, rating})
     .then(({data}) => dispatch(loadReviews(data)))
     .then(() => dispatch(resetReviewForm()))
     .catch(() => dispatch(showReviewError()))

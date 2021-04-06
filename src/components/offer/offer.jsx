@@ -82,7 +82,7 @@ const Offer = ({
               {loadedOffer.isPremium && <div className="property__mark"><span>Premium</span></div>}
 
               <div className="property__name-wrapper">
-                <h1 className="property__name">
+                <h1 className="property__name" data-testid="offer-title">
                   {loadedOffer.title}
                 </h1>
                 <button

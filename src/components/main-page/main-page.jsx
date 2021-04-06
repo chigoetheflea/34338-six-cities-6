@@ -44,7 +44,7 @@ const MainPage = ({offers, city, isDataLoaded, loadOffers}) => {
       <main className="page__main page__main--index">
         <h1 className="visually-hidden">Cities</h1>
         <CitiesList cities={CITIES}/>
-        {mainPage.isListEmpty ? <MainPageEmpty /> : <MainPageFull city={city} offers={offers} />}
+        {mainPage.isListEmpty ? <MainPageEmpty city={city} /> : <MainPageFull city={city} offers={offers} />}
       </main>
     </div>
   );
