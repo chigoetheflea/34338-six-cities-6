@@ -6,7 +6,7 @@ import {ActionType} from '../actions';
 import {fetchReviews, postReview} from '../../store/api-actions';
 import {ReviewFormStatus, Path} from '../../util/const';
 
-const api = createApi(() => {});
+const api = createApi(() => {}, () => {});
 
 const SIMPLE_OFFER_ID = 10;
 

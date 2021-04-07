@@ -186,6 +186,24 @@ const getReviewValidityMessage = (value) => {
   return ``;
 };
 
+const getLoginValidityMessage = (value) => {
+  const validRegExp = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  const isLoginValid = validRegExp.test(value);
+
+  if (!isLoginValid) {
+    return `Invalid email`;
+  }
+
+  return ``;
+};
+
+const getIdFromURL = () => {
+  const href = window.location.pathname;
+  const URLParts = href.split(`/`);
+
+  return +URLParts[URLParts.length - 1];
+};
+
 export {
   getRandomInteger,
   getFormattedDate,
@@ -201,4 +219,6 @@ export {
   getRandomArrayElements,
   adaptReviewsToClient,
   getReviewValidityMessage,
+  getLoginValidityMessage,
+  getIdFromURL,
 };

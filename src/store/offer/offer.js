@@ -5,7 +5,7 @@ const initialState = {
   isRelatedLoaded: false,
   relatedOffers: [],
   hoveredOffer: null,
-  activeOffer: 0,
+  activeOffer: null,
   loadedOffer: null,
 };
 
@@ -45,6 +45,15 @@ const offer = (state = initialState, action) => {
         ...state,
         relatedOffers: payload,
         isRelatedLoaded: true,
+      };
+
+    case ActionType.SET_OFFER:
+      return {
+        ...state,
+        activeOffer: payload,
+        hoveredOffer: payload,
+        isOfferLoaded: false,
+        isRelatedLoaded: false,
       };
   }
 

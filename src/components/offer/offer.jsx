@@ -12,9 +12,9 @@ import Related from '../related/related';
 import reviewPropTypes from '../../prop-types/reviews';
 import offersPropTypes from '../../prop-types/offers';
 import {PlaceType, AuthorizationStatus, Path} from '../../util/const';
-import {getFormattedRating, getRandomArrayElements} from '../../util/util';
+import {getFormattedRating, getRandomArrayElements, getIdFromURL} from '../../util/util';
 import {fetchOffer, manageFavorite} from '../../store/api-actions';
-import {clearLoadedOffer} from '../../store/actions';
+import {clearLoadedOffer, setOffer} from '../../store/actions';
 import {getLoadedOffer, getOfferLoadingStatus, getActiveOffer, getRelatedOffers, getRelatedLoadingStatus} from '../../store/offer/selectors';
 import {getAuthorizationStatus} from '../../store/user/selectors';
 
@@ -30,6 +30,7 @@ const Offer = ({
   relatedOffers,
   authorizationStatus,
   manageFavoriteStatus,
+  setLoadedOffer,
 }) => {
   let neighbourhoodLocations = [];
 
@@ -41,10 +42,14 @@ const Offer = ({
   }
 
   useEffect(() => {
-    if (!isOfferLoaded) {
+    if (!activeOffer) {
+      setLoadedOffer(getIdFromURL());
+    }
+
+    if (activeOffer && !isOfferLoaded) {
       loadOffer(activeOffer);
     }
-  }, [isOfferLoaded, isRelatedLoaded]);
+  }, [isOfferLoaded, isRelatedLoaded, activeOffer]);
 
   useEffect(() => () => {
     clearOffer();
@@ -178,6 +183,7 @@ Offer.propTypes = {
   loadOffer: func.isRequired,
   clearOffer: func.isRequired,
   manageFavoriteStatus: func.isRequired,
+  setLoadedOffer: func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -199,6 +205,9 @@ const mapDispatchToProps = (dispatch) => ({
   manageFavoriteStatus(id, status) {
     dispatch(manageFavorite(id, status));
   },
+  setLoadedOffer(id) {
+    dispatch(setOffer(id));
+  }
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Offer);

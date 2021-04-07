@@ -9,6 +9,8 @@ import {
   resetReviewForm,
   showReviewError,
   loadFavorites,
+  showLoginError,
+  checkUserAuthorization
 } from '../store/actions';
 import {AuthorizationStatus, Path} from '../util/const';
 
@@ -24,15 +26,18 @@ const fetchFavoritesList = () => (dispatch, _getState, api) => (
 
 const checkAuthorization = () => (dispatch, _getState, api) => (
   api.get(Path.LOGIN)
-    .then(({data}) => dispatch(saveAuthInfo(data)))
-    .then(() => dispatch(requestAuthorization(AuthorizationStatus.AUTH)))
+  .then(({data}) => dispatch(saveAuthInfo(data)))
+  .then(() => dispatch(requestAuthorization(AuthorizationStatus.AUTH)))
+  .then(() => dispatch(checkUserAuthorization()))
 );
 
 const login = ({login: email, password}) => (dispatch, _getState, api) => (
   api.post(Path.LOGIN, {email, password})
     .then(({data}) => dispatch(saveAuthInfo(data)))
     .then(() => dispatch(requestAuthorization(AuthorizationStatus.AUTH)))
+    .then(() => dispatch(checkUserAuthorization()))
     .then(() => browserHistory.push(Path.HOME))
+    .catch(() => dispatch(showLoginError()))
 );
 
 const fetchOffer = (id) => (dispatch, _getState, api) => (

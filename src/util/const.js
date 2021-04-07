@@ -92,6 +92,7 @@ const DEFAULT_SORTING = SortingType.POPULAR;
 
 const HttpCode = {
   UNAUTHORIZED: 401,
+  NOT_FOUND: 404,
 };
 
 const AuthorizationStatus = {

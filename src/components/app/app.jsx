@@ -1,5 +1,5 @@
 import React from 'react';
-import {arrayOf} from 'prop-types';
+import {arrayOf, bool} from 'prop-types';
 import {connect} from 'react-redux';
 import {Route, Switch} from 'react-router-dom';
 
@@ -8,14 +8,16 @@ import Login from '../login/login';
 import Favorites from '../favorites/favorites';
 import Offer from '../offer/offer';
 import PageNotFound from '../page-not-found/page-not-found';
+import NotAvailable from '../not-available/not-available';
 import PrivateRoute from '../private-route/private-route';
 import offersPropTypes from '../../prop-types/offers';
 import {getOffers} from '../../store/offers/selectors';
+import {getServerAvailability} from '../../store/app/selectors';
 import {Path} from '../../util/const';
 
-const App = ({offers}) => {
+const App = ({offers, isServerAvailable}) => {
   return (
-    <Switch>
+    isServerAvailable ? <Switch>
       <Route exact path={Path.HOME}>
         <MainPage offers={offers} />
       </Route>
@@ -33,16 +35,18 @@ const App = ({offers}) => {
       <Route>
         <PageNotFound />
       </Route>
-    </Switch>
+    </Switch> : <NotAvailable />
   );
 };
 
 App.propTypes = {
   offers: arrayOf(offersPropTypes),
+  isServerAvailable: bool,
 };
 
 const mapStateToProps = (state) => ({
   offers: getOffers(state),
+  isServerAvailable: getServerAvailability(state),
 });
 
 export default connect(mapStateToProps)(App);

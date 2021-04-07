@@ -1,18 +1,37 @@
-import React, {useRef} from 'react';
+import React, {useRef, useState, useEffect} from 'react';
 import {connect} from 'react-redux';
-import {func, string} from 'prop-types';
+import {bool, func, string} from 'prop-types';
 import browserHistory from '../../services/browser-history';
+import {Redirect} from 'react-router';
 
 import Header from '../header/header';
 import {changeCity} from '../../store/actions';
 import {login} from '../../store/api-actions';
 import {CITIES, DEFAULT_CITY, Path, AuthorizationStatus} from '../../util/const';
-import {getRandomArrayElement} from '../../util/util';
-import {getAuthorizationStatus} from '../../store/user/selectors';
+import {getRandomArrayElement, getLoginValidityMessage} from '../../util/util';
+import {getAuthorizationStatus, getLoginError} from '../../store/user/selectors';
 
-const Login = ({loginUser, updateCity, authorizationStatus}) => {
+const ERROR_MESSAGE = `Error. Try again`;
+
+const Login = ({loginUser, updateCity, authorizationStatus, loginError}) => {
   const loginRef = useRef();
   const passwordRef = useRef();
+  const formRef = useRef();
+
+  useEffect(() => {
+    if (loginError) {
+      setLoginForm({
+        ...loginForm,
+        isError: true,
+        isDisabled: true,
+      });
+    }
+  }, [loginError]);
+
+  const [loginForm, setLoginForm] = useState({
+    isDisabled: true,
+    isError: false,
+  });
 
   const handleUserLogin = (evt) => {
     evt.preventDefault();
@@ -31,8 +50,23 @@ const Login = ({loginUser, updateCity, authorizationStatus}) => {
     updateCity(randomCity);
   };
 
+  const handleFieldChange = (evt) => {
+    const target = evt.target;
+    const {value} = target;
+
+    target.setCustomValidity(getLoginValidityMessage(value));
+    target.reportValidity();
+
+    setLoginForm({
+      ...loginForm,
+      isDisabled: !formRef.current.checkValidity(),
+    });
+  };
+
   if (authorizationStatus === AuthorizationStatus.AUTH) {
-    browserHistory.push(Path.HOME);
+    return (
+      <Redirect to={Path.HOME} />
+    );
   }
 
   return (
@@ -44,6 +78,7 @@ const Login = ({loginUser, updateCity, authorizationStatus}) => {
           <section className="login">
             <h1 className="login__title" data-testid="login-title">Sign in</h1>
             <form
+              ref={formRef}
               onSubmit={handleUserLogin}
               className="login__form form"
             >
@@ -57,6 +92,7 @@ const Login = ({loginUser, updateCity, authorizationStatus}) => {
                   placeholder="Email"
                   required
                   data-testid="email"
+                  onChange={handleFieldChange}
                 />
               </div>
               <div className="login__input-wrapper form__input-wrapper">
@@ -71,7 +107,15 @@ const Login = ({loginUser, updateCity, authorizationStatus}) => {
                   data-testid="password"
                 />
               </div>
-              <button className="login__submit form__submit button" type="submit" data-testid="login-button">Sign in</button>
+              <button
+                className="login__submit form__submit button"
+                type="submit"
+                data-testid="login-button"
+                disabled={loginForm.isDisabled ? `disabled` : ``}
+              >
+                Sign in
+              </button>
+              {loginForm.isError && <p>{ERROR_MESSAGE}</p>}
             </form>
           </section>
           <section className="locations locations--login locations--current">
@@ -94,10 +138,12 @@ Login.propTypes = {
   loginUser: func.isRequired,
   updateCity: func.isRequired,
   authorizationStatus: string,
+  loginError: bool,
 };
 
 const mapStateToProps = (state) => ({
   authorizationStatus: getAuthorizationStatus(state),
+  loginError: getLoginError(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({

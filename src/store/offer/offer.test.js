@@ -6,7 +6,7 @@ import {ActionType} from '../actions';
 import {fetchOffer, fetchRelatedOffers, manageFavorite} from '../../store/api-actions';
 import {Path} from '../../util/const';
 
-const api = createApi(() => {});
+const api = createApi(() => {}, () => {});
 
 const SIMPLE_OFFER_ID = 10;
 
@@ -60,7 +60,7 @@ describe(`Offer reducer works correctly`, () => {
       isRelatedLoaded: false,
       relatedOffers: [],
       hoveredOffer: null,
-      activeOffer: 0,
+      activeOffer: null,
       loadedOffer: null,
     };
 
@@ -86,7 +86,7 @@ describe(`Offer reducer works correctly`, () => {
 
   it(`Reducer should return new active offer' id`, () => {
     const initialState = {
-      activeOffer: 0,
+      activeOffer: null,
     };
 
     const expected = {

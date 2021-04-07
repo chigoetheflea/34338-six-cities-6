@@ -13,7 +13,7 @@ const mockStore = configureStore({});
 
 const store = mockStore({
   USER: {
-    authorizationStatus: AuthorizationStatus.AUTH,
+    authorizationStatus: AuthorizationStatus.NO_AUTH,
     loggedUser: {
       id: 1,
       email: `qwerty@qwerty.com`,

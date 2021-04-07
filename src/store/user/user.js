@@ -4,6 +4,8 @@ import {AuthorizationStatus} from '../../util/const';
 const initialState = {
   authorizationStatus: AuthorizationStatus.NO_AUTH,
   loggedUser: null,
+  loginError: false,
+  isAuthChecked: false,
 };
 
 const user = (state = initialState, action) => {
@@ -14,12 +16,25 @@ const user = (state = initialState, action) => {
       return {
         ...state,
         loggedUser: payload,
+        loginError: false,
       };
 
     case ActionType.REQUEST_AUTHORIZATION:
       return {
         ...state,
         authorizationStatus: payload,
+      };
+
+    case ActionType.SHOW_LOGIN_ERROR:
+      return {
+        ...state,
+        loginError: true,
+      };
+
+    case ActionType.CHECK_AUTH:
+      return {
+        ...state,
+        isAuthChecked: true,
       };
   }
 

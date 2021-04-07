@@ -35,7 +35,7 @@ const Favorites = ({offers, isFavoritesLoaded, loadFavoriteOffers, clearFavorite
 
       <main className="page__main page__main--favorites">
         <div className="page__favorites-container container">
-          <section className="favorites">
+          <section className="favorites" data-testid="favorites-container">
             {offers.length ? <FavoritesFull offers={offers} /> : <FavoritesEmpty />}
           </section>
         </div>

@@ -1,7 +1,9 @@
 const ActionType = {
-  REDIRECT_TO_ROUTE: `app/redirect`,
+  CHECK_SERVER: `app/checkServer`,
   REQUEST_AUTHORIZATION: `user/requestAuthorization`,
   SAVE_AUTH_INFO: `user/login`,
+  CHECK_AUTH: `user/checkAuth`,
+  SHOW_LOGIN_ERROR: `user/loginError`,
   CHANGE_CITY: `city/change`,
   CHANGE_SORTING: `offers/changeSorting`,
   LOAD_OFFERS: `offers/load`,
@@ -9,6 +11,7 @@ const ActionType = {
   LOAD_FAVORITES: `offers/loadFavorites`,
   CLEAR_FAVORITES: `offers/clearFavorites`,
   LOAD_OFFER: `offer/load`,
+  SET_OFFER: `offer/set`,
   CHANGE_ACTIVE_OFFER: `offer/changeActive`,
   CHANGE_HOVERED_OFFER: `offer/changeHovered`,
   CLEAR_LOADED_OFFER: `offer/clear`,
@@ -18,6 +21,11 @@ const ActionType = {
   SHOW_REVIEW_ERROR: `reviews/showPostError`,
   CLEAR_REVIEW_FORM_STATUS: `reviews/clearFormStatus`,
 };
+
+const checkServerAvailability = (status) => ({
+  type: ActionType.CHECK_SERVER,
+  payload: status,
+});
 
 const changeCity = (city) => ({
   type: ActionType.CHANGE_CITY,
@@ -42,6 +50,10 @@ const changeActiveOffer = (id) => ({
 const requestAuthorization = (status) => ({
   type: ActionType.REQUEST_AUTHORIZATION,
   payload: status,
+});
+
+const checkUserAuthorization = () => ({
+  type: ActionType.CHECK_AUTH,
 });
 
 const loadOffers = (offers) => ({
@@ -72,6 +84,11 @@ const loadOffer = (info) => ({
   payload: info,
 });
 
+const setOffer = (id) => ({
+  type: ActionType.SET_OFFER,
+  payload: id,
+});
+
 const clearLoadedOffer = () => ({
   type: ActionType.CLEAR_LOADED_OFFER,
 });
@@ -98,6 +115,10 @@ const clearReviewFormStatus = () => ({
   type: ActionType.CLEAR_REVIEW_FORM_STATUS,
 });
 
+const showLoginError = () => ({
+  type: ActionType.SHOW_LOGIN_ERROR,
+});
+
 export {
   ActionType,
   changeCity,
@@ -117,4 +138,8 @@ export {
   clearReviewFormStatus,
   loadFavorites,
   clearFavorites,
+  showLoginError,
+  setOffer,
+  checkUserAuthorization,
+  checkServerAvailability,
 };

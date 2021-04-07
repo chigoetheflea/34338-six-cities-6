@@ -6,7 +6,7 @@ import {ActionType} from '../actions';
 import {fetchOffersList, fetchFavoritesList} from '../../store/api-actions';
 import {DEFAULT_SORTING, DEFAULT_CITY, Path} from '../../util/const';
 
-const api = createApi(() => {});
+const api = createApi(() => {}, () => {});
 
 const simpleOffer = {
   bedrooms: 3,

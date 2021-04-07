@@ -59,10 +59,10 @@ Header.propTypes = {
   authorizationStatus: string.isRequired,
   loggedUser: shape({
     avatarUrl: string,
-    email: string.isRequired,
-    id: number.isRequired,
-    isPro: bool.isRequired,
-    name: string.isRequired,
+    email: string,
+    id: number,
+    isPro: bool,
+    name: string,
   }),
 };
 
