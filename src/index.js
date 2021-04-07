@@ -9,7 +9,7 @@ import {composeWithDevTools} from 'redux-devtools-extension';
 import App from './components/app/app';
 import rootReducer from './store/root-reducer';
 import {createApi} from './services/api';
-import {ActionCreator} from './store/actions';
+import {requestAuthorization} from './store/actions';
 import {checkAuthorization, fetchOffersList} from './store/api-actions';
 import {AuthorizationStatus} from './util/const';
 import {getAdaptedOffers} from './store/middlewares/offers';
@@ -17,7 +17,7 @@ import {getAdaptedUserInfo} from './store/middlewares/user';
 import {getAdaptedReviews} from './store/middlewares/reviews';
 import browserHistory from './services/browser-history';
 
-const api = createApi(() => store.dispatch(ActionCreator.requestAuthorization(AuthorizationStatus.NO_AUTH)));
+const api = createApi(() => store.dispatch(requestAuthorization(AuthorizationStatus.NO_AUTH)));
 
 const store = createStore(
     rootReducer,
